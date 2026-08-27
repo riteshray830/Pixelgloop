@@ -1,68 +1,58 @@
-PIXELGLOOP
-Product Read Me / Functional Overview
-Based on supplied index.html.html implementation
-Pixelgloop is a browser-based pixel-art creation and image-conversion tool. It imports PNG, JPEG and WebP images, converts them into an editable grid-based pixel representation, supports manual editing and reference tracing, and exports PNG artwork.
-1. Core Modes
-AI Magic is the image-conversion workflow. Tracer Mode lets the user load a reference image and manually create pixel artwork over it.
-2. Image Import and Conversion
-•	Accepts PNG, JPEG and WebP.
-•	Supports file selection and drag-and-drop.
-•	Initial imported grid preserves image aspect ratio with the largest dimension set to 64.
-•	The conversion workflow is labelled “AI Magic”, but the supplied code uses local JavaScript processing rather than an external AI model/API.
-•	Processing uses a Web Worker, RGB-to-LAB conversion, iterative color clustering, LAB-distance tolerance and indexed pixel mapping.
-•	Maximum colors: 2–500; tolerance presets: 0, 5, 15, 30 and 50.
-3. Grid and Art Controls
-•	Configurable width and height; applied dimensions are clamped to 512.
-•	Default grid: 64 × 64.
-•	Ten pixel shapes: Square, Rounded Box, Circle, Triangle, Rectangle, Trapezium, Rhombus/Diamond, Pentagon, Hexagon and Octagon.
-•	Grid visibility and grid color are configurable.
-•	Activity Numbers / pattern mode displays palette indices.
-4. Creative Tools
-•	Pan: move the canvas.
-•	Pencil: paint the selected palette color.
-•	Eraser: clear cells.
-•	Bucket: contiguous animated flood fill.
-•	Color Picker: select an existing palette color; in Tracer Mode it can sample the reference image.
-•	Custom palette colors can be added.
-5. Tracer Mode
-•	Loads PNG/JPEG/WebP reference images.
-•	Reference opacity can be adjusted from 0% to 100%; default 50%.
-•	Reference visibility can be toggled.
-•	Loading a new tracing reference clears the current pixel matrix.
-•	Reference colors can be sampled into the palette.
-6. View and History
-•	Zoom range: 5%–500%, with buttons and mouse-wheel control.
-•	Canvas panning is supported.
-•	Undo/redo is available from the UI.
-•	Keyboard shortcuts: Ctrl/Cmd+Z, Ctrl/Cmd+Y and Shift+Ctrl/Cmd+Z.
-•	History retains up to 30 states.
-7. Export
-•	Color Only PNG.
-•	Color + Grid PNG.
-•	B&W Only PNG.
-•	B&W + Grid PNG.
-•	Grid Only transparent PNG.
-•	Export scales: 1×, 10× and 24×.
-•	True-size export uses square pixels and suppresses pattern numbers.
-•	Grid-inclusive true-size export is automatically upscaled to 10×.
-•	Empty color/B&W canvases are not exported.
-8. UI / Technical Behavior
-•	Light and dark themes.
-•	Responsive layout below 850px.
-•	Processing overlay and toast notifications.
-•	Web Audio API sound effects.
-•	HTML Canvas 2D rendering.
-•	Single-file HTML/CSS/JavaScript implementation.
-9. Current Scope Boundaries
-The supplied implementation does not evidence external AI services, vector conversion, cloud storage, accounts, collaboration or project-file persistence. These should be treated as future scope unless separately implemented.
-10. Quick Start
-1. Open the HTML file in a modern browser.
-2. Upload or drag an image into Magic Image Import.
-3. Adjust grid and Color Magic settings.
-4. Choose a pixel shape.
-5. Refine with the editing tools.
-6. Use Tracer Mode when a reference image is needed.
-7. Review with zoom/pan/undo/redo.
-8. Export the required PNG.
-Document Control
-Version: 1.0 | Source: supplied index.html.html
+# PIXELGLOOP
+### Colorful Pixel Art Creation, Image Conversion & Mass Background Removal
+
+Pixelgloop is a high-performance browser-based pixel-art creation, conversion, and sprite-processing tool. It imports PNG, JPEG, and WebP images, converts them into editable grid-based pixel representations, supports manual editing and reference tracing, provides automated mass background removal with whitespace trimming, and exports PNG/ZIP artwork.
+
+---
+
+### 1. Core Modes
+1. **✨ AI Magic**: Converts uploaded pixel art or raster pictures into an editable pixel grid with customizable color quantization and palette generation.
+2. **✍️ Tracer Mode**: Lets users load a background reference image at configurable opacity to trace and craft pixel art manually.
+3. **🧹 Mass BG Remover**: Batch processes multiple pixel art images to automatically detect background colors, erase them (with contiguous outer flood-fill or global matching), crop empty whitespace, and export individual PNGs or a single ZIP archive.
+
+---
+
+### 2. Image Import & Native Pixel Art Sizing
+- **Original Dimension Detection**: Automatically detects native pixel dimensions of imported pixel art (e.g. 16×16, 24×24, 32×32, 48×48, 64×64, 128×128) rather than forcing an arbitrary 64×64 grid.
+- **Quick Original Size Toggle**: Allows 1-click resetting to the original uploaded image dimensions.
+- **Crisp Nearest-Neighbor Sampling**: Uses unblurred pixel sampling (`imageSmoothingEnabled = false`) to maintain crisp pixel art edges.
+- Supports file picker and drag-and-drop.
+
+---
+
+### 3. Background Removal & Color Eraser Features
+- **🪄 Auto-Erase Background**: One-click detection and removal of the canvas border background into transparent cells.
+- **🎯 Magic Color Eraser Tool**: Click any pixel on the canvas to immediately erase all occurrences of that color across the canvas.
+- **🎯 Erase Specific Color Modal**: Inspects active canvas colors and lets users choose any specific color to erase completely.
+- **Palette Swatch Quick-Erase**: Hover over any palette swatch and click `✕` to clear all cells of that color.
+- **Mass BG Remover Tab**:
+  - Detection modes: *Contiguous Outer BG (Edge Flood-fill)* (protects internal sprite details like white eyes/teeth), *Global Match*, *Pure Whitespace & Off-White*, *Auto Corner/Border Color*, *Custom Color Pick*.
+  - Configurable color match tolerance slider (0–80).
+  - Optional whitespace trimming / sprite auto-cropping with custom padding margins (0–4 px).
+  - Interactive Before & After preview cards on transparent checkerboards.
+  - 1-click "Open in Pixel Editor" to continue editing any processed sprite.
+  - "Download All as ZIP" (client-side zero-dependency archive generator) and "Download All (PNGs)".
+
+---
+
+### 4. Creative Tools & Grid Controls
+- **Tools**: Pan Hand, Magic Pencil, Cell Eraser, Magic Color Eraser, Paint Bucket (animated flood-fill), Color Picker (supports canvas & tracer sampling).
+- **Shapes**: Square, Rounded Box, Circle, Triangle, Rectangle, Trapezium, Rhombus/Diamond, Pentagon, Hexagon, Octagon.
+- **Grid Customization**: Grid lines toggle, custom grid line color, Activity Number pattern mode.
+- **History & View**: Zoom (5%–500%), canvas panning, 30-step Undo/Redo with keyboard shortcuts (Ctrl/Cmd+Z, Ctrl/Cmd+Y).
+- **Synthesizer SFX**: Dynamic Web Audio API feedback for tools, actions, and downloads.
+
+---
+
+### 5. Export Capabilities
+- **Formats**: Color Only PNG, Color + Grid PNG, B&W Only PNG, B&W + Grid PNG, Grid Only transparent PNG.
+- **Export Scales**: 1× (True-size pixel art), 10× Standard, 24× Super HD.
+- **Batch Export**: ZIP archive export and sequential multi-file PNG downloads.
+
+---
+
+### 6. Technical Stack
+- Vanilla HTML5 / CSS3 / JavaScript (ES6+).
+- Client-side Web Worker for color clustering and LAB-space color quantization.
+- Pure JS zero-dependency ZIP archive generator.
+- Fully offline capable, responsive desktop and mobile design, dark and light themes.
