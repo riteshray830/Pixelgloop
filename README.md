@@ -1,14 +1,14 @@
 # PIXELGLOOP
-### Colorful Pixel Art Creation, Image Conversion & Mass Background Removal
+### Colorful Pixel Art Creation, Image Conversion & Creative Remover
 
-Pixelgloop is a high-performance browser-based pixel-art creation, conversion, and sprite-processing tool. It imports PNG, JPEG, and WebP images, converts them into editable grid-based pixel representations, supports manual editing and reference tracing, provides automated mass background removal with whitespace trimming, and exports PNG/ZIP artwork.
+Pixelgloop is a high-performance browser-based pixel-art creation, conversion, and sprite-processing tool. It imports PNG, JPEG, and WebP images, converts them into editable grid-based pixel representations, supports manual editing and reference tracing, provides automated creative background removal with whitespace trimming, and exports PNG/ZIP artwork.
 
 ---
 
 ### 1. Core Modes
 1. **✨ AI Magic**: Converts uploaded pixel art or raster pictures into an editable pixel grid with customizable color quantization and palette generation.
 2. **✍️ Tracer Mode**: Lets users load a background reference image at configurable opacity to trace and craft pixel art manually.
-3. **🧹 Mass BG Remover**: Batch processes multiple pixel art images to automatically detect background colors, erase them (with contiguous outer flood-fill or global matching), crop empty whitespace, and export individual PNGs or a single ZIP archive.
+3. **🧹 Creative Remover**: Batch processes pixel art images to automatically detect and remove background colors (with smart edge-aware gradient flood-fill or global matching), crop empty whitespace, and export individual PNGs or a single ZIP archive.
 
 ---
 
@@ -21,13 +21,16 @@ Pixelgloop is a high-performance browser-based pixel-art creation, conversion, a
 ---
 
 ### 3. Background Removal & Color Eraser Features
-- **🪄 Auto-Erase Background**: One-click detection and removal of the canvas border background into transparent cells.
+- **🪄 Smart Auto-Erase Background**: One-click multi-seed edge-aware detection and removal of single-color or gradient/multi-tone backgrounds into transparent cells, with automatic floating sparkle speck cleanup.
 - **🎯 Magic Color Eraser Tool**: Click any pixel on the canvas to immediately erase all occurrences of that color across the canvas.
 - **🎯 Erase Specific Color Modal**: Inspects active canvas colors and lets users choose any specific color to erase completely.
 - **Palette Swatch Quick-Erase**: Hover over any palette swatch and click `✕` to clear all cells of that color.
-- **Mass BG Remover Tab**:
-  - Detection modes: *Contiguous Outer BG (Edge Flood-fill)* (protects internal sprite details like white eyes/teeth), *Global Match*, *Pure Whitespace & Off-White*, *Auto Corner/Border Color*, *Custom Color Pick*.
+- **Creative Remover Tab**:
+  - Detection modes: *Smart Edge-Aware & Gradient (Auto Multi-tone)*, *Contiguous Outer BG (Edge Flood-fill)* (protects internal sprite details like white eyes/teeth), *Global Match*, *Pure Whitespace & Off-White*, *Auto Corner/Border Color*, *Custom Color Pick*.
   - Configurable color match tolerance slider (0–80).
+  - ✨ Auto-Clean Floating Specks / Sparkles: Automatically identifies and clears isolated background particles, stars, and bokeh artifacts.
+  - Adjustable card size controls (S, M, L, XL presets and continuous size slider from 320px to 780px).
+  - High-resolution 🔍 Full-Size Inspect Modal for pixel-level detail analysis.
   - Optional whitespace trimming / sprite auto-cropping with custom padding margins (0–4 px).
   - Interactive Before & After preview cards on transparent checkerboards.
   - 1-click "Open in Pixel Editor" to continue editing any processed sprite.
