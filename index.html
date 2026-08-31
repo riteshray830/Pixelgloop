@@ -619,8 +619,15 @@
         }
 
         @keyframes popoverFadeIn {
-            from { opacity: 0; transform: scale(0.94) translateY(-8px); }
-            to { opacity: 1; transform: scale(1) translateY(0); }
+            from {
+                opacity: 0;
+                transform: scale(0.94) translateY(-8px);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
         }
 
         .picker-header {
@@ -662,7 +669,7 @@
             background-color: #ff0000;
             overflow: hidden;
             cursor: crosshair;
-            box-shadow: inset 0 0 0 1px rgba(0,0,0,0.15);
+            box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.15);
         }
 
         .picker-sat-white {
@@ -1508,7 +1515,8 @@
     <div id="toast" class="toast">Notice message here</div>
 
     <!-- Hidden Color & File Inputs -->
-    <input type="color" id="custom-color-add" style="opacity: 0; position: fixed; width: 0; height: 0; pointer-events: none; border: none; padding: 0; margin: 0;">
+    <input type="color" id="custom-color-add"
+        style="opacity: 0; position: fixed; width: 0; height: 0; pointer-events: none; border: none; padding: 0; margin: 0;">
     <input type="file" id="file-upload" accept="image/png, image/jpeg, image/webp" hidden>
     <input type="file" id="batch-file-upload" accept="image/png, image/jpeg, image/webp" multiple hidden>
 
@@ -1951,9 +1959,11 @@
             <div class="picker-handle" id="picker-handle"></div>
         </div>
         <div class="picker-controls-row">
-            <button type="button" class="picker-eyedropper-btn" id="btn-picker-eyedropper" title="Pick color from screen (Eyedropper)">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="m14 7 3 3m-9 9 7.5-7.5a2.121 2.121 0 0 0 0-3l-1-1a2.121 2.121 0 0 0-3 0L4 16v4h4Z"/>
+            <button type="button" class="picker-eyedropper-btn" id="btn-picker-eyedropper"
+                title="Pick color from screen (Eyedropper)">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="m14 7 3 3m-9 9 7.5-7.5a2.121 2.121 0 0 0 0-3l-1-1a2.121 2.121 0 0 0-3 0L4 16v4h4Z" />
                 </svg>
             </button>
             <div class="picker-color-preview" id="picker-preview-circle"></div>
@@ -1965,7 +1975,8 @@
             <!-- HEX CODE COMES FIRST IN COLOR PICKER -->
             <div class="picker-field-group">
                 <label for="popover-hex-input">HEX</label>
-                <input type="text" id="popover-hex-input" class="picker-input" placeholder="#845ef7" spellcheck="false" title="Copy, paste or type any hex code">
+                <input type="text" id="popover-hex-input" class="picker-input" placeholder="#845ef7" spellcheck="false"
+                    title="Copy, paste or type any hex code">
             </div>
             <div class="picker-rgb-group">
                 <div class="picker-rgb-col">
