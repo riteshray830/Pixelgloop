@@ -600,6 +600,242 @@
             transform: scale(1.1);
         }
 
+        /* Interactive Color Picker Popover */
+        .color-picker-popover {
+            position: fixed;
+            z-index: 9999;
+            width: 240px;
+            background: var(--bg-card);
+            border: 2px solid var(--border);
+            border-radius: 14px;
+            box-shadow: 0 14px 40px rgba(0, 0, 0, 0.28);
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            user-select: none;
+            font-family: var(--font);
+            animation: popoverFadeIn 0.16s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes popoverFadeIn {
+            from { opacity: 0; transform: scale(0.94) translateY(-8px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        .picker-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .picker-title {
+            font-size: 11px;
+            font-weight: 800;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .picker-close-btn {
+            background: transparent;
+            border: none;
+            font-size: 13px;
+            font-weight: 900;
+            color: var(--text-muted);
+            cursor: pointer;
+            padding: 2px 6px;
+            border-radius: 6px;
+            transition: 0.15s;
+        }
+
+        .picker-close-btn:hover {
+            background: var(--bg-hover);
+            color: var(--text-main);
+        }
+
+        .picker-sat-val {
+            position: relative;
+            width: 100%;
+            height: 130px;
+            border-radius: 8px;
+            background-color: #ff0000;
+            overflow: hidden;
+            cursor: crosshair;
+            box-shadow: inset 0 0 0 1px rgba(0,0,0,0.15);
+        }
+
+        .picker-sat-white {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to right, #fff, rgba(255, 255, 255, 0));
+        }
+
+        .picker-sat-black {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, #000, rgba(0, 0, 0, 0));
+        }
+
+        .picker-handle {
+            position: absolute;
+            width: 14px;
+            height: 14px;
+            border: 2.5px solid #fff;
+            border-radius: 50%;
+            box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.7), inset 0 0 0 1px rgba(0, 0, 0, 0.5);
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            top: 0;
+            left: 0;
+        }
+
+        .picker-controls-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .picker-eyedropper-btn {
+            width: 28px;
+            height: 28px;
+            border-radius: 8px;
+            border: 1.5px solid var(--border);
+            background: var(--bg-panel);
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: 0.15s;
+            flex-shrink: 0;
+            padding: 0;
+        }
+
+        .picker-eyedropper-btn:hover {
+            background: var(--bg-hover);
+            border-color: var(--accent-blue);
+            color: var(--accent-blue);
+        }
+
+        .picker-color-preview {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            border: 2px solid var(--border);
+            flex-shrink: 0;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+            background-color: #ff0000;
+        }
+
+        .picker-hue-wrapper {
+            flex: 1;
+            display: flex;
+            align-items: center;
+        }
+
+        .picker-hue-slider {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 100%;
+            height: 12px;
+            border-radius: 6px;
+            background: linear-gradient(to right, #f00 0%, #ff0 17%, #0f0 33%, #0ff 50%, #00f 67%, #f0f 83%, #f00 100%);
+            outline: none;
+            cursor: pointer;
+        }
+
+        .picker-hue-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: #fff;
+            border: 2px solid rgba(0, 0, 0, 0.4);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+            cursor: pointer;
+        }
+
+        .picker-hue-slider::-moz-range-thumb {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: #fff;
+            border: 2px solid rgba(0, 0, 0, 0.4);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+            cursor: pointer;
+        }
+
+        .picker-fields-section {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .picker-field-group {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--bg-base);
+            padding: 4px 8px;
+            border-radius: 8px;
+            border: 1.5px solid var(--border);
+        }
+
+        .picker-field-group label {
+            font-size: 11px;
+            font-weight: 900;
+            color: var(--accent-blue);
+            font-family: monospace;
+        }
+
+        .picker-rgb-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 6px;
+        }
+
+        .picker-rgb-col {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            background: var(--bg-base);
+            padding: 3px 6px;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+        }
+
+        .picker-rgb-col label {
+            font-size: 10px;
+            font-weight: 800;
+            color: var(--text-muted);
+        }
+
+        .picker-input {
+            width: 100%;
+            border: none;
+            background: transparent;
+            color: var(--text-main);
+            font-size: 12px;
+            font-weight: 700;
+            font-family: monospace;
+            outline: none;
+        }
+
+        .picker-input.sm {
+            font-size: 11px;
+            padding: 1px 0;
+            -moz-appearance: textfield;
+            text-align: center;
+        }
+
+        .picker-input.sm::-webkit-outer-spin-button,
+        .picker-input.sm::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
         /* Canvas Area */
         .canvas-container {
             position: relative;
@@ -1272,7 +1508,7 @@
     <div id="toast" class="toast">Notice message here</div>
 
     <!-- Hidden Color & File Inputs -->
-    <input type="color" id="custom-color-add" style="visibility: hidden; position: absolute;">
+    <input type="color" id="custom-color-add" style="opacity: 0; position: fixed; width: 0; height: 0; pointer-events: none; border: none; padding: 0; margin: 0;">
     <input type="file" id="file-upload" accept="image/png, image/jpeg, image/webp" hidden>
     <input type="file" id="batch-file-upload" accept="image/png, image/jpeg, image/webp" multiple hidden>
 
@@ -1443,9 +1679,9 @@
                 <div class="control-group">
                     <label>Export Image Scale</label>
                     <select id="setting-export-scale">
-                        <option value="1">Tiny Pixel Art (1x1 px)</option>
+                        <option value="1" selected>Tiny Pixel Art (1x1 px)</option>
                         <option value="10">Standard (10x Bigger)</option>
-                        <option value="24" selected>Super HD (24x Bigger)</option>
+                        <option value="24">Super HD (24x Bigger)</option>
                     </select>
                 </div>
             </details>
@@ -1459,9 +1695,9 @@
                 <div class="control-group">
                     <label>Smart Color Merging</label>
                     <select id="setting-tolerance">
-                        <option value="0">0 - Strict (Exact Pixel Art)</option>
+                        <option value="0" selected>0 - Strict (Exact Pixel Art)</option>
                         <option value="5">5 - Very Low</option>
-                        <option value="15" selected>15 - Medium (Best)</option>
+                        <option value="15">15 - Medium (Best)</option>
                         <option value="30">30 - High (Strong)</option>
                     </select>
                 </div>
@@ -1698,6 +1934,51 @@
                     <button type="button" class="btn primary" id="btn-inspect-open-editor">🎨 Open in Pixel
                         Editor</button>
                     <button type="button" class="btn success" id="btn-inspect-download">📥 Download PNG</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Interactive Color Picker Popover -->
+    <div id="color-picker-popover" class="color-picker-popover" style="display: none;">
+        <div class="picker-header">
+            <span class="picker-title">🎨 Color Picker</span>
+            <button type="button" class="picker-close-btn" id="btn-close-picker" title="Close Color Picker">✕</button>
+        </div>
+        <div class="picker-sat-val" id="picker-sat-val">
+            <div class="picker-sat-white"></div>
+            <div class="picker-sat-black"></div>
+            <div class="picker-handle" id="picker-handle"></div>
+        </div>
+        <div class="picker-controls-row">
+            <button type="button" class="picker-eyedropper-btn" id="btn-picker-eyedropper" title="Pick color from screen (Eyedropper)">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="m14 7 3 3m-9 9 7.5-7.5a2.121 2.121 0 0 0 0-3l-1-1a2.121 2.121 0 0 0-3 0L4 16v4h4Z"/>
+                </svg>
+            </button>
+            <div class="picker-color-preview" id="picker-preview-circle"></div>
+            <div class="picker-hue-wrapper">
+                <input type="range" class="picker-hue-slider" id="picker-hue-slider" min="0" max="360" value="0">
+            </div>
+        </div>
+        <div class="picker-fields-section">
+            <!-- HEX CODE COMES FIRST IN COLOR PICKER -->
+            <div class="picker-field-group">
+                <label for="popover-hex-input">HEX</label>
+                <input type="text" id="popover-hex-input" class="picker-input" placeholder="#845ef7" spellcheck="false" title="Copy, paste or type any hex code">
+            </div>
+            <div class="picker-rgb-group">
+                <div class="picker-rgb-col">
+                    <label>R</label>
+                    <input type="number" id="popover-r-input" min="0" max="255" class="picker-input sm">
+                </div>
+                <div class="picker-rgb-col">
+                    <label>G</label>
+                    <input type="number" id="popover-g-input" min="0" max="255" class="picker-input sm">
+                </div>
+                <div class="picker-rgb-col">
+                    <label>B</label>
+                    <input type="number" id="popover-b-input" min="0" max="255" class="picker-input sm">
                 </div>
             </div>
         </div>
@@ -2049,11 +2330,32 @@
 
                 this.jobId = 0;
                 this.toastTimeout = null;
+                this.isAddingCustomColor = false;
 
                 this.initEvents();
                 this.initBatchEvents();
                 this.initKeyboardShortcuts();
+                this.initColorPicker();
                 this.initCanvas();
+            }
+
+            selectTool(toolName, playSfx = false) {
+                this.state.activeTool = toolName;
+                const targetBtn = document.getElementById(`tool-${toolName}`);
+                if (targetBtn) {
+                    document.querySelectorAll('.tool-btn').forEach(b => b.classList.remove('active'));
+                    targetBtn.classList.add('active');
+                    if (playSfx) {
+                        this.audio.sfxToolSelect();
+                        this.triggerAnim(targetBtn, 'anim-pop');
+                    }
+                }
+                this.canvas.style.cursor = (toolName === 'pan') ? 'grab' : 'crosshair';
+
+                const bucketGroup = document.getElementById('bucket-mode-group');
+                const eraserGroup = document.getElementById('eraser-mode-group');
+                if (bucketGroup) bucketGroup.style.display = (toolName === 'bucket') ? 'block' : 'none';
+                if (eraserGroup) eraserGroup.style.display = (toolName === 'eraser') ? 'block' : 'none';
             }
 
             initCanvas() {
@@ -2062,7 +2364,7 @@
                 this.state.pixels = new Array(this.state.gridWidth * this.state.gridHeight).fill(-1);
                 this.buildPaletteUI();
 
-                document.getElementById('tool-pencil').click();
+                this.selectTool('pencil');
                 this.centerCanvas();
                 this.saveHistory(true);
                 this.render();
@@ -2087,12 +2389,360 @@
             }
 
             hexToRgb(hex) {
-                let result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+                if (!hex || typeof hex !== 'string') return null;
+                let clean = hex.trim().replace(/^#/, '');
+                if (clean.length === 3) {
+                    clean = clean.split('').map(c => c + c).join('');
+                }
+                let result = /^([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(clean);
                 return result ? { r: parseInt(result[1], 16), g: parseInt(result[2], 16), b: parseInt(result[3], 16) } : null;
             }
 
             rgbToHex(r, g, b) {
                 return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+            }
+
+            hsvToRgb(h, s, v) {
+                let c = v * s;
+                let x = c * (1 - Math.abs(((h / 60) % 2) - 1));
+                let m = v - c;
+                let r = 0, g = 0, b = 0;
+                if (h >= 0 && h < 60) { r = c; g = x; b = 0; }
+                else if (h >= 60 && h < 120) { r = x; g = c; b = 0; }
+                else if (h >= 120 && h < 180) { r = 0; g = c; b = x; }
+                else if (h >= 180 && h < 240) { r = 0; g = x; b = c; }
+                else if (h >= 240 && h < 300) { r = x; g = 0; b = c; }
+                else if (h >= 300 && h <= 360) { r = c; g = 0; b = x; }
+                return {
+                    r: Math.round((r + m) * 255),
+                    g: Math.round((g + m) * 255),
+                    b: Math.round((b + m) * 255)
+                };
+            }
+
+            rgbToHsv(r, g, b) {
+                r /= 255; g /= 255; b /= 255;
+                let max = Math.max(r, g, b), min = Math.min(r, g, b);
+                let h = 0, s = 0, v = max;
+                let d = max - min;
+                s = max === 0 ? 0 : d / max;
+                if (max === min) {
+                    h = 0;
+                } else {
+                    switch (max) {
+                        case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+                        case g: h = (b - r) / d + 2; break;
+                        case b: h = (r - g) / d + 4; break;
+                    }
+                    h *= 60;
+                }
+                return {
+                    h: Math.round(h),
+                    s: s,
+                    v: v
+                };
+            }
+
+            initColorPicker() {
+                this.pickerState = {
+                    h: 260,
+                    s: 0.65,
+                    v: 0.95,
+                    r: 132,
+                    g: 94,
+                    b: 247,
+                    hex: '#845ef7',
+                    isDraggingSatVal: false,
+                    anchorEl: null
+                };
+
+                const popover = document.getElementById('color-picker-popover');
+                const satValBox = document.getElementById('picker-sat-val');
+                const hueSlider = document.getElementById('picker-hue-slider');
+                const hexInput = document.getElementById('popover-hex-input');
+                const rInput = document.getElementById('popover-r-input');
+                const gInput = document.getElementById('popover-g-input');
+                const bInput = document.getElementById('popover-b-input');
+                const closeBtn = document.getElementById('btn-close-picker');
+                const eyedropperBtn = document.getElementById('btn-picker-eyedropper');
+
+                if (closeBtn) {
+                    closeBtn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        this.closeColorPicker();
+                    });
+                }
+
+                if (eyedropperBtn) {
+                    if (window.EyeDropper) {
+                        eyedropperBtn.addEventListener('click', async () => {
+                            try {
+                                const eyeDropper = new EyeDropper();
+                                const result = await eyeDropper.open();
+                                if (result && result.sRGBHex) {
+                                    this.setPickerColorFromHex(result.sRGBHex);
+                                }
+                            } catch (err) {
+                                // Cancelled by user
+                            }
+                        });
+                    } else {
+                        eyedropperBtn.style.display = 'none';
+                    }
+                }
+
+                const updateSatValFromEvent = (e) => {
+                    const rect = satValBox.getBoundingClientRect();
+                    const clientX = (e.clientX !== undefined) ? e.clientX : (e.touches && e.touches[0] ? e.touches[0].clientX : 0);
+                    const clientY = (e.clientY !== undefined) ? e.clientY : (e.touches && e.touches[0] ? e.touches[0].clientY : 0);
+                    let s = Math.max(0, Math.min(1, (clientX - rect.left) / rect.width));
+                    let v = Math.max(0, Math.min(1, 1 - (clientY - rect.top) / rect.height));
+                    this.pickerState.s = s;
+                    this.pickerState.v = v;
+                    this.syncPickerFromHsv(false);
+                };
+
+                if (satValBox) {
+                    satValBox.addEventListener('mousedown', (e) => {
+                        this.pickerState.isDraggingSatVal = true;
+                        updateSatValFromEvent(e);
+                        const onMouseMove = (moveEv) => {
+                            if (this.pickerState.isDraggingSatVal) updateSatValFromEvent(moveEv);
+                        };
+                        const onMouseUp = () => {
+                            this.pickerState.isDraggingSatVal = false;
+                            window.removeEventListener('mousemove', onMouseMove);
+                            window.removeEventListener('mouseup', onMouseUp);
+                        };
+                        window.addEventListener('mousemove', onMouseMove);
+                        window.addEventListener('mouseup', onMouseUp);
+                    });
+
+                    satValBox.addEventListener('touchstart', (e) => {
+                        this.pickerState.isDraggingSatVal = true;
+                        updateSatValFromEvent(e);
+                        const onTouchMove = (moveEv) => {
+                            if (this.pickerState.isDraggingSatVal) updateSatValFromEvent(moveEv);
+                        };
+                        const onTouchEnd = () => {
+                            this.pickerState.isDraggingSatVal = false;
+                            window.removeEventListener('touchmove', onTouchMove);
+                            window.removeEventListener('touchend', onTouchEnd);
+                        };
+                        window.addEventListener('touchmove', onTouchMove, { passive: true });
+                        window.addEventListener('touchend', onTouchEnd);
+                    });
+                }
+
+                if (hueSlider) {
+                    hueSlider.addEventListener('input', () => {
+                        this.pickerState.h = parseInt(hueSlider.value) || 0;
+                        this.syncPickerFromHsv(false);
+                    });
+                }
+
+                if (hexInput) {
+                    const applyHexValue = (rawVal) => {
+                        const rgb = this.hexToRgb(rawVal);
+                        if (rgb) {
+                            const hsv = this.rgbToHsv(rgb.r, rgb.g, rgb.b);
+                            this.pickerState.h = hsv.h;
+                            this.pickerState.s = hsv.s;
+                            this.pickerState.v = hsv.v;
+                            this.syncPickerFromHsv(true);
+                        }
+                    };
+
+                    hexInput.addEventListener('input', (e) => {
+                        applyHexValue(e.target.value);
+                    });
+
+                    hexInput.addEventListener('paste', (e) => {
+                        const pasted = (e.clipboardData || window.clipboardData)?.getData('text');
+                        if (pasted) {
+                            e.preventDefault();
+                            hexInput.value = pasted.trim();
+                            applyHexValue(pasted.trim());
+                        }
+                    });
+
+                    hexInput.addEventListener('keydown', (e) => {
+                        if (e.key === 'Enter') {
+                            e.preventDefault();
+                            applyHexValue(hexInput.value);
+                        }
+                    });
+                }
+
+                const applyRgbValues = () => {
+                    let r = Math.max(0, Math.min(255, parseInt(rInput.value) || 0));
+                    let g = Math.max(0, Math.min(255, parseInt(gInput.value) || 0));
+                    let b = Math.max(0, Math.min(255, parseInt(bInput.value) || 0));
+                    const hsv = this.rgbToHsv(r, g, b);
+                    this.pickerState.h = hsv.h;
+                    this.pickerState.s = hsv.s;
+                    this.pickerState.v = hsv.v;
+                    this.syncPickerFromHsv(false, true);
+                };
+
+                [rInput, gInput, bInput].forEach(inp => {
+                    if (inp) {
+                        inp.addEventListener('input', applyRgbValues);
+                    }
+                });
+
+                if (popover) {
+                    popover.addEventListener('click', (e) => e.stopPropagation());
+                    popover.addEventListener('mousedown', (e) => e.stopPropagation());
+                }
+
+                window.addEventListener('click', (e) => {
+                    if (popover && popover.style.display !== 'none') {
+                        if (!popover.contains(e.target) && (!this.pickerState.anchorEl || !this.pickerState.anchorEl.contains(e.target))) {
+                            this.closeColorPicker();
+                        }
+                    }
+                });
+            }
+
+            openColorPicker(anchorEl) {
+                this.isAddingCustomColor = true;
+                this.pickerState.anchorEl = anchorEl;
+                const popover = document.getElementById('color-picker-popover');
+                if (!popover) return;
+
+                if (anchorEl) {
+                    const rect = anchorEl.getBoundingClientRect();
+                    let top = rect.bottom + 8;
+                    let left = Math.max(10, Math.min(window.innerWidth - 260, rect.left - 40));
+                    if (top + 300 > window.innerHeight) {
+                        top = Math.max(10, rect.top - 310);
+                    }
+                    popover.style.top = `${top}px`;
+                    popover.style.left = `${left}px`;
+                }
+
+                let currentRgb = { r: 132, g: 94, b: 247 };
+                if (this.state.currentColorIdx >= 0 && this.state.currentColorIdx < this.state.palette.length) {
+                    currentRgb = this.state.palette[this.state.currentColorIdx];
+                }
+
+                const hsv = this.rgbToHsv(currentRgb.r, currentRgb.g, currentRgb.b);
+                this.pickerState.h = hsv.h;
+                this.pickerState.s = hsv.s;
+                this.pickerState.v = hsv.v;
+
+                popover.style.display = 'flex';
+                this.syncPickerFromHsv(false);
+                this.audio.sfxAction();
+            }
+
+            closeColorPicker() {
+                const popover = document.getElementById('color-picker-popover');
+                if (popover) {
+                    popover.style.display = 'none';
+                }
+                this.isAddingCustomColor = false;
+            }
+
+            setPickerColorFromHex(hexStr) {
+                const rgb = this.hexToRgb(hexStr);
+                if (!rgb) return;
+                const hsv = this.rgbToHsv(rgb.r, rgb.g, rgb.b);
+                this.pickerState.h = hsv.h;
+                this.pickerState.s = hsv.s;
+                this.pickerState.v = hsv.v;
+                this.syncPickerFromHsv(false);
+            }
+
+            syncPickerFromHsv(skipHexInput = false, skipRgbInputs = false) {
+                const { h, s, v } = this.pickerState;
+                const rgb = this.hsvToRgb(h, s, v);
+                if (rgb.r === 0 && rgb.g === 0 && rgb.b === 0) { rgb.r = 1; rgb.g = 1; rgb.b = 1; }
+                const hex = this.rgbToHex(rgb.r, rgb.g, rgb.b);
+
+                this.pickerState.r = rgb.r;
+                this.pickerState.g = rgb.g;
+                this.pickerState.b = rgb.b;
+                this.pickerState.hex = hex;
+
+                const satValBox = document.getElementById('picker-sat-val');
+                const handle = document.getElementById('picker-handle');
+                const hueSlider = document.getElementById('picker-hue-slider');
+                const preview = document.getElementById('picker-preview-circle');
+                const hexInput = document.getElementById('popover-hex-input');
+                const rInput = document.getElementById('popover-r-input');
+                const gInput = document.getElementById('popover-g-input');
+                const bInput = document.getElementById('popover-b-input');
+
+                if (satValBox) satValBox.style.backgroundColor = `hsl(${h}, 100%, 50%)`;
+                if (handle) {
+                    handle.style.left = `${s * 100}%`;
+                    handle.style.top = `${(1 - v) * 100}%`;
+                }
+                if (hueSlider && document.activeElement !== hueSlider) hueSlider.value = h;
+                if (preview) preview.style.backgroundColor = hex;
+                if (hexInput && !skipHexInput && document.activeElement !== hexInput) {
+                    hexInput.value = hex;
+                }
+                if (!skipRgbInputs) {
+                    if (rInput && document.activeElement !== rInput) rInput.value = rgb.r;
+                    if (gInput && document.activeElement !== gInput) gInput.value = rgb.g;
+                    if (bInput && document.activeElement !== bInput) bInput.value = rgb.b;
+                }
+
+                this.applyLivePickerColor(rgb);
+            }
+
+            applyLivePickerColor(rgb) {
+                if (this.isAddingCustomColor) {
+                    this.state.palette.push(rgb);
+                    this.state.currentColorIdx = this.state.palette.length - 1;
+                    this.isAddingCustomColor = false;
+                    this.buildPaletteUI();
+                } else {
+                    if (this.state.currentColorIdx >= 0 && this.state.currentColorIdx < this.state.palette.length) {
+                        this.state.palette[this.state.currentColorIdx] = rgb;
+                        const swatches = document.querySelectorAll('.color-swatch');
+                        if (swatches[this.state.currentColorIdx]) {
+                            swatches[this.state.currentColorIdx].style.backgroundColor = `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`;
+                            if (this.state.showPattern) {
+                                const luminance = 0.299 * rgb.r + 0.587 * rgb.g + 0.114 * rgb.b;
+                                const textColor = luminance > 128 ? '#000000' : '#ffffff';
+                                swatches[this.state.currentColorIdx].innerHTML = `<span style="color: ${textColor}; font-weight: 800; font-size: 12px; pointer-events: none;">${this.state.currentColorIdx + 1}</span>`;
+                            }
+                        }
+                    }
+                }
+
+                if (this.state.activeTool !== 'pencil' && this.state.activeTool !== 'bucket' && this.state.activeTool !== 'color-eraser') {
+                    this.selectTool('pencil');
+                }
+            }
+
+            addHexColor(hexStr, fromPaste = false) {
+                if (!hexStr || typeof hexStr !== 'string') return false;
+                const rgb = this.hexToRgb(hexStr);
+                if (!rgb) {
+                    this.showToast('⚠️ Please enter a valid Hex code (e.g. #e64980 or #fff)');
+                    return false;
+                }
+                if (rgb.r === 0 && rgb.g === 0 && rgb.b === 0) { rgb.r = 1; rgb.g = 1; rgb.b = 1; }
+
+                const formattedHex = this.rgbToHex(rgb.r, rgb.g, rgb.b);
+                const existingIdx = this.state.palette.findIndex(c => c.r === rgb.r && c.g === rgb.g && c.b === rgb.b);
+                if (existingIdx !== -1) {
+                    this.state.currentColorIdx = existingIdx;
+                } else {
+                    this.state.palette.push(rgb);
+                    this.state.currentColorIdx = this.state.palette.length - 1;
+                }
+
+                this.buildPaletteUI();
+                this.selectTool('pencil');
+                this.audio.sfxAction();
+                this.showToast(fromPaste ? `📋 Pasted & Selected: ${formattedHex}` : `🎨 Color Added: ${formattedHex}`);
+                return true;
             }
 
             setMode(mode) {
@@ -2141,6 +2791,19 @@
                         }
                     }
                 });
+
+                window.addEventListener('paste', (e) => {
+                    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+                    const text = (e.clipboardData || window.clipboardData)?.getData('text');
+                    if (text) {
+                        const clean = text.trim();
+                        const rgb = this.hexToRgb(clean);
+                        if (rgb) {
+                            e.preventDefault();
+                            this.addHexColor(clean, true);
+                        }
+                    }
+                });
             }
 
             initEvents() {
@@ -2180,17 +2843,6 @@
                     this.render();
                 });
                 document.getElementById('setting-trace-visible').addEventListener('change', (e) => { this.state.showTracingOverlay = e.target.checked; this.render(); });
-
-                document.getElementById('custom-color-add').addEventListener('change', (e) => {
-                    const rgb = this.hexToRgb(e.target.value);
-                    if (rgb) {
-                        if (rgb.r === 0 && rgb.g === 0 && rgb.b === 0) { rgb.r = 1; rgb.g = 1; rgb.b = 1; }
-                        this.state.palette.push(rgb);
-                        this.state.currentColorIdx = this.state.palette.length - 1;
-                        this.buildPaletteUI();
-                        document.getElementById('tool-pencil').click();
-                    }
-                });
 
                 // Original Dimensions Button Handler
                 document.getElementById('btn-use-original-size').addEventListener('click', () => {
@@ -2266,17 +2918,8 @@
 
                 document.querySelectorAll('.tool-btn').forEach(btn => {
                     btn.addEventListener('click', (e) => {
-                        this.audio.sfxToolSelect();
-                        this.triggerAnim(e.currentTarget, 'anim-pop');
-                        document.querySelectorAll('.tool-btn').forEach(b => b.classList.remove('active'));
-                        e.currentTarget.classList.add('active');
-                        this.state.activeTool = e.currentTarget.id.replace('tool-', '');
-                        this.canvas.style.cursor = (this.state.activeTool === 'pan') ? 'grab' : 'crosshair';
-
-                        const bucketGroup = document.getElementById('bucket-mode-group');
-                        const eraserGroup = document.getElementById('eraser-mode-group');
-                        if (bucketGroup) bucketGroup.style.display = (this.state.activeTool === 'bucket') ? 'block' : 'none';
-                        if (eraserGroup) eraserGroup.style.display = (this.state.activeTool === 'eraser') ? 'block' : 'none';
+                        const toolName = e.currentTarget.id.replace('tool-', '');
+                        this.selectTool(toolName, true);
                     });
                 });
 
@@ -2628,13 +3271,22 @@
                     }
 
                     div.onclick = () => {
+                        this.isAddingCustomColor = false;
                         this.audio.sfxAction();
                         this.triggerAnim(div, 'anim-pop');
                         document.querySelectorAll('.color-swatch').forEach(el => el.classList.remove('active'));
                         div.classList.add('active');
                         this.state.currentColorIdx = i;
+                        const popover = document.getElementById('color-picker-popover');
+                        if (popover && popover.style.display !== 'none') {
+                            const hsv = this.rgbToHsv(c.r, c.g, c.b);
+                            this.pickerState.h = hsv.h;
+                            this.pickerState.s = hsv.s;
+                            this.pickerState.v = hsv.v;
+                            this.syncPickerFromHsv(false);
+                        }
                         if (this.state.activeTool !== 'pencil' && this.state.activeTool !== 'bucket' && this.state.activeTool !== 'color-eraser') {
-                            document.getElementById('tool-pencil').click();
+                            this.selectTool('pencil');
                         }
                     };
 
@@ -2657,7 +3309,10 @@
                 addBtn.className = 'add-color-btn';
                 addBtn.innerHTML = '➕';
                 addBtn.title = "Add Custom Color";
-                addBtn.onclick = () => document.getElementById('custom-color-add').click();
+                addBtn.onclick = (e) => {
+                    e.stopPropagation();
+                    this.openColorPicker(addBtn);
+                };
                 container.appendChild(addBtn);
 
                 document.getElementById('stat-colors').textContent = this.state.palette.length;
