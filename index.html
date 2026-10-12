@@ -600,6 +600,637 @@
             transform: scale(1.1);
         }
 
+        /* Palette Tab Bar & Responsiveness */
+        .palette-tab-bar {
+            display: none !important;
+            background: var(--bg-base);
+            padding: 3px;
+            border-radius: 12px;
+            border: 1.5px solid var(--border);
+            margin-bottom: 12px;
+            gap: 3px;
+        }
+
+        .palette-tab-btn {
+            flex: 1;
+            padding: 5px 4px;
+            font-size: 11px;
+            font-weight: 800;
+            border-radius: 9px;
+            border: none;
+            background: transparent;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: all 0.15s ease;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            white-space: nowrap;
+        }
+
+        .palette-tab-btn:hover {
+            color: var(--text-main);
+            background: var(--bg-hover);
+        }
+
+        .palette-tab-btn.active {
+            background: var(--bg-card);
+            color: var(--accent-blue);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+        }
+
+        .palette-tab-count {
+            display: inline-block;
+            font-size: 9px;
+            font-weight: 800;
+            background: var(--bg-base);
+            padding: 1px 4px;
+            border-radius: 8px;
+            color: var(--text-muted);
+            border: 1px solid var(--border);
+        }
+
+        .palette-tab-btn.active .palette-tab-count {
+            background: var(--accent-blue);
+            color: #fff;
+            border-color: var(--accent-blue);
+        }
+
+        .palette-count-badge {
+            font-size: 10px;
+            font-weight: 800;
+            background: var(--bg-base);
+            color: var(--text-muted);
+            padding: 1px 6px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            vertical-align: middle;
+            display: inline-block;
+        }
+
+        .palette-scroll-container {
+            max-height: 195px;
+            overflow-y: auto;
+            overflow-x: hidden;
+            padding: 4px 4px 6px 2px;
+            margin: -4px -4px 0 -2px;
+            border-radius: 10px;
+            scrollbar-width: thin;
+            scrollbar-color: var(--border) transparent;
+            transition: max-height 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .palette-scroll-container.expanded {
+            max-height: 480px;
+        }
+
+        .palette-scroll-container::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        .palette-scroll-container::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .palette-scroll-container::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 10px;
+        }
+
+        .palette-scroll-container::-webkit-scrollbar-thumb:hover {
+            background: var(--text-muted);
+        }
+
+        .empty-custom-tip {
+            grid-column: 1 / -1;
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-align: center;
+            padding: 10px 6px;
+            background: var(--bg-base);
+            border-radius: 10px;
+            border: 1.5px dashed var(--border);
+            margin-bottom: 2px;
+        }
+
+        /* Top Tap-to-Reveal Pill Button */
+        .detect-reveal-pill {
+            position: absolute;
+            top: 14px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 35;
+            background: var(--bg-card);
+            border: 1.5px solid var(--border);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.16), 0 2px 6px rgba(0, 0, 0, 0.08);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 999px;
+            padding: 6px 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 800;
+            color: var(--text-main);
+            transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+            user-select: none;
+        }
+
+        .detect-reveal-pill:hover {
+            transform: translateX(-50%) translateY(-2px);
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.22);
+            border-color: var(--accent-blue);
+        }
+
+        .detect-reveal-pill.active {
+            border-color: var(--accent-blue);
+            background: var(--bg-panel);
+            box-shadow: 0 0 0 3px rgba(51, 154, 240, 0.2), 0 8px 24px rgba(0, 0, 0, 0.18);
+        }
+
+        .detect-reveal-pill .pill-glow-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--accent-blue);
+            box-shadow: 0 0 8px var(--accent-blue);
+            animation: pillPulse 2s infinite ease-in-out;
+            flex-shrink: 0;
+        }
+
+        @keyframes pillPulse {
+            0%, 100% { transform: scale(1); opacity: 0.9; }
+            50% { transform: scale(1.3); opacity: 0.4; }
+        }
+
+        .detect-reveal-pill .pill-title {
+            letter-spacing: -0.2px;
+        }
+
+        .detect-reveal-pill .pill-badge {
+            background: rgba(51, 154, 240, 0.15);
+            color: var(--accent-blue);
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 11px;
+            font-weight: 800;
+            transition: background 0.2s, color 0.2s;
+        }
+
+        .detect-reveal-pill .pill-badge.success {
+            background: rgba(64, 192, 87, 0.15);
+            color: var(--accent-green);
+        }
+
+        .detect-reveal-pill .pill-badge.warning {
+            background: rgba(255, 107, 107, 0.15);
+            color: var(--accent);
+        }
+
+        .detect-reveal-pill .pill-chevron {
+            font-size: 10px;
+            color: var(--text-muted);
+            transition: transform 0.2s;
+        }
+
+        .detect-reveal-pill.active .pill-chevron {
+            transform: rotate(180deg);
+        }
+
+        /* Floating Movable & Resizable Palette Match & Recolor Panel */
+        .detect-remapping-panel {
+            position: fixed;
+            top: 72px;
+            left: calc(50% - 215px);
+            width: 430px;
+            min-width: 330px;
+            max-width: calc(100vw - 32px);
+            height: 500px;
+            min-height: 250px;
+            max-height: calc(100vh - 84px);
+            resize: both;
+            overflow: hidden;
+            z-index: 9995;
+            background: var(--bg-card);
+            border: 2px solid var(--border);
+            border-radius: 18px;
+            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.26), 0 4px 12px rgba(0, 0, 0, 0.12);
+            display: flex;
+            flex-direction: column;
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            animation: panelPopIn 0.24s cubic-bezier(0.16, 1, 0.3, 1);
+            user-select: none;
+        }
+
+        @keyframes panelPopIn {
+            0% { opacity: 0; transform: scale(0.96) translateY(-8px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        /* Panel Header (Draggable) */
+        .detect-panel-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 14px;
+            background: var(--bg-panel);
+            border-bottom: 1.5px solid var(--border);
+            cursor: grab;
+            flex-shrink: 0;
+        }
+
+        .detect-panel-header:active {
+            cursor: grabbing;
+        }
+
+        .panel-header-left {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            pointer-events: none;
+        }
+
+        .drag-grip-icon {
+            font-size: 14px;
+            color: var(--text-muted);
+            letter-spacing: -2px;
+            opacity: 0.7;
+        }
+
+        .panel-header-title {
+            font-size: 13px;
+            font-weight: 800;
+            color: var(--text-main);
+            letter-spacing: -0.2px;
+        }
+
+        .panel-status-pill {
+            font-size: 10px;
+            font-weight: 800;
+            padding: 2px 7px;
+            border-radius: 8px;
+            background: rgba(51, 154, 240, 0.15);
+            color: var(--accent-blue);
+        }
+
+        .panel-status-pill.success {
+            background: rgba(64, 192, 87, 0.15);
+            color: var(--accent-green);
+        }
+
+        .panel-header-actions {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .btn-panel-action {
+            width: 24px;
+            height: 24px;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+            background: var(--bg-card);
+            color: var(--text-muted);
+            font-size: 11px;
+            font-weight: 800;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.15s;
+        }
+
+        .btn-panel-action:hover {
+            background: var(--bg-hover);
+            color: var(--text-main);
+            border-color: var(--accent-blue);
+        }
+
+        .btn-panel-action.close-action:hover {
+            background: #ff6b6b;
+            color: #fff;
+            border-color: #ff6b6b;
+        }
+
+        /* Panel Body */
+        .detect-panel-body {
+            flex: 1;
+            overflow-y: auto;
+            overflow-x: hidden;
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .detect-panel-body::-webkit-scrollbar {
+            width: 6px;
+        }
+        .detect-panel-body::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 4px;
+        }
+
+        /* Hero 1-Click Action Card */
+        .remapping-hero-card {
+            background: var(--bg-panel);
+            border: 1.5px solid var(--border);
+            border-radius: 14px;
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            flex-shrink: 0;
+        }
+
+        .hero-stats-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+        }
+
+        .hero-stat-badge {
+            background: var(--bg-card);
+            border: 1px solid var(--border-light);
+            border-radius: 10px;
+            padding: 6px 8px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .stat-number {
+            font-size: 14px;
+            font-weight: 900;
+            color: var(--text-main);
+        }
+
+        .stat-label {
+            font-size: 10px;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        /* 1-Click Recolor Primary CTA Button */
+        .btn-1click-recolor {
+            width: 100%;
+            padding: 10px 14px;
+            border: none;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #228be6 0%, #7950f2 100%);
+            color: #ffffff;
+            box-shadow: 0 6px 20px rgba(34, 139, 230, 0.35);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            font-family: var(--font);
+            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-1click-recolor:hover:not(:disabled) {
+            transform: translateY(-2px) scale(1.01);
+            box-shadow: 0 10px 26px rgba(34, 139, 230, 0.5);
+            filter: brightness(1.08);
+        }
+
+        .btn-1click-recolor:active:not(:disabled) {
+            transform: translateY(0) scale(0.99);
+        }
+
+        .btn-1click-recolor:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            filter: grayscale(0.5);
+            box-shadow: none;
+        }
+
+        .btn-1click-icon {
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+
+        .btn-1click-text {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            line-height: 1.2;
+        }
+
+        .btn-1click-text strong {
+            font-size: 13px;
+            font-weight: 900;
+            letter-spacing: 0.2px;
+        }
+
+        .btn-1click-text small {
+            font-size: 10px;
+            opacity: 0.9;
+            font-weight: 600;
+        }
+
+        /* Hero Actions Row */
+        .hero-actions-row {
+            display: flex;
+            gap: 6px;
+            justify-content: space-between;
+        }
+
+        .hero-actions-row .btn {
+            flex: 1;
+            font-size: 11px;
+            font-weight: 800;
+            padding: 6px 8px;
+            border-radius: 9px;
+            text-align: center;
+            white-space: nowrap;
+        }
+
+        /* Breakdown List Section */
+        .remapping-breakdown-section {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            flex: 1;
+            min-height: 120px;
+        }
+
+        .breakdown-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 11px;
+            font-weight: 800;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+            padding: 0 2px;
+            flex-shrink: 0;
+        }
+
+        .remapping-list {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .mapping-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            padding: 8px 10px;
+            background: var(--bg-panel);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            transition: all 0.15s;
+            cursor: pointer;
+        }
+
+        .mapping-row:hover {
+            border-color: var(--accent-blue);
+            background: var(--bg-hover);
+            transform: translateX(2px);
+        }
+
+        .mapping-col {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            min-width: 95px;
+        }
+
+        .mapping-col .swatch-preview {
+            width: 24px;
+            height: 24px;
+            border-radius: 6px;
+            border: 1.5px solid var(--border);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            flex-shrink: 0;
+        }
+
+        .mapping-col .color-meta {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.15;
+        }
+
+        .mapping-col .color-hex {
+            font-size: 11px;
+            font-weight: 800;
+            font-family: monospace;
+            color: var(--text-main);
+        }
+
+        .mapping-col .pixel-count {
+            font-size: 10px;
+            font-weight: 700;
+            color: var(--text-muted);
+        }
+
+        .mapping-col .custom-tag {
+            font-size: 9px;
+            font-weight: 800;
+            color: var(--accent-green);
+            text-transform: uppercase;
+        }
+
+        .mapping-arrow {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+            flex-shrink: 0;
+        }
+
+        .mapping-arrow .arrow-symbol {
+            font-size: 12px;
+            color: var(--accent-blue);
+            font-weight: 900;
+        }
+
+        .mapping-arrow .similarity-pill {
+            font-size: 9px;
+            font-weight: 800;
+            padding: 1px 5px;
+            border-radius: 6px;
+            background: rgba(32, 201, 151, 0.15);
+            color: var(--accent-teal);
+            white-space: nowrap;
+        }
+
+        .mapping-actions {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            flex-shrink: 0;
+        }
+
+        .btn-row-replace {
+            padding: 4px 8px;
+            font-size: 11px;
+            font-weight: 800;
+            border-radius: 7px;
+            border: 1px solid var(--accent-blue);
+            background: rgba(51, 154, 240, 0.12);
+            color: var(--accent-blue);
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+
+        .btn-row-replace:hover {
+            background: var(--accent-blue);
+            color: #ffffff;
+        }
+
+        .empty-remapping-state {
+            padding: 24px 16px;
+            text-align: center;
+            background: var(--bg-panel);
+            border: 1.5px dashed var(--border);
+            border-radius: 12px;
+            color: var(--text-muted);
+            font-size: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Panel Footer & Resize Grip */
+        .detect-panel-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 6px 12px;
+            background: var(--bg-panel);
+            border-top: 1px solid var(--border);
+            font-size: 10px;
+            color: var(--text-muted);
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+
+        .resize-handle-indicator {
+            font-size: 11px;
+            color: var(--text-muted);
+            opacity: 0.6;
+            pointer-events: none;
+        }
+
         /* Interactive Color Picker Popover */
         .color-picker-popover {
             position: fixed;
@@ -1593,6 +2224,8 @@
                     <button type="button" class="tool-btn" id="tool-bucket"
                         title="Paint Bucket (Whole Board or Enclosed Area)">🪣</button>
                     <button type="button" class="tool-btn" id="tool-picker" title="Color Picker">💧</button>
+                    <button type="button" class="tool-btn" id="tool-same-color"
+                        title="Select Same Color (Click any pixel to detect all matching pixels - Illustrator style)">🔍</button>
                 </div>
                 <!-- Bucket Target Mode Selector -->
                 <div class="control-group" id="bucket-mode-group" style="display: none; margin-top: 12px;">
@@ -1634,17 +2267,74 @@
                 </div>
             </div>
 
-            <div class="panel">
-                <h3>
-                    <span>Color Palette</span>
-                    <button type="button" class="btn sm" id="btn-open-erase-modal" title="Erase a specific color"
-                        style="padding: 3px 8px; font-size: 11px;">🎯 Erase Color</button>
-                </h3>
-                <div class="palette-grid" id="palette-container"></div>
+            <!-- Color Palette Panel with Tabs & Responsive Scroll -->
+            <div class="panel" id="panel-color-palette-container">
+                <!-- Palette View Tabs (Hidden, Both view is active by default) -->
+                <div class="palette-tab-bar" id="palette-tab-bar" style="display: none;">
+                    <button type="button" class="palette-tab-btn active" id="tab-palette-all" title="View both image and custom palettes">
+                        📑 Both
+                    </button>
+                    <button type="button" class="palette-tab-btn" id="tab-palette-image" title="View image color palette">
+                        🖼️ Image Colors (<span id="badge-palette-count">12</span>)
+                    </button>
+                    <button type="button" class="palette-tab-btn" id="tab-palette-custom" title="View custom color palette">
+                        🎨 Custom (<span id="badge-custom-count">7</span>)
+                    </button>
+                </div>
+
+                <div class="palette-block" id="block-image-palette">
+                    <h3>
+                        <div style="display: flex; align-items: center; gap: 6px;">
+                            <span>Color Palette</span>
+                            <span class="palette-count-badge" id="stat-palette-count">12</span>
+                        </div>
+                        <div style="display: flex; gap: 4px; align-items: center;">
+                            <button type="button" class="btn sm" id="btn-toggle-palette-expand" title="Expand / Compact palette view"
+                                style="padding: 3px 6px; font-size: 11px;">⤢</button>
+                            <button type="button" class="btn sm" id="btn-open-erase-modal" title="Erase a specific color"
+                                style="padding: 3px 8px; font-size: 11px;">🎯 Erase Color</button>
+                        </div>
+                    </h3>
+                    <div class="palette-scroll-container" id="palette-scroll-wrapper">
+                        <div class="palette-grid" id="palette-container"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Custom Color Palette Panel (Directly under Color Palette) -->
+            <div class="panel" id="panel-custom-palette">
+                <div class="palette-block" id="block-custom-palette">
+                    <h3>
+                        <div style="display: flex; align-items: center; gap: 6px;">
+                            <span>Custom Color Palette</span>
+                            <span class="palette-count-badge" id="stat-custom-palette-count">7</span>
+                        </div>
+                        <div style="display: flex; gap: 4px; align-items: center; flex-wrap: wrap; justify-content: flex-end;">
+                            <button type="button" class="btn sm" id="btn-detect-non-custom" title="Detect all pixels on canvas NOT in your Custom Palette (Illustrator style)"
+                                style="padding: 3px 8px; font-size: 11px; font-weight: 800; border-color: var(--accent-blue); color: var(--accent-blue);">🔍 Detect Non-Custom</button>
+                            <button type="button" class="btn sm" id="btn-add-custom-color" title="Add a new custom color"
+                                style="padding: 3px 8px; font-size: 11px;">➕ Add</button>
+                            <button type="button" class="btn sm" id="btn-save-current-to-custom" title="Save current active color to custom palette"
+                                style="padding: 3px 8px; font-size: 11px;">⭐ Save Current</button>
+                        </div>
+                    </h3>
+                    <div class="palette-scroll-container" id="custom-palette-scroll-wrapper">
+                        <div class="palette-grid" id="custom-palette-container"></div>
+                    </div>
+                </div>
             </div>
         </aside>
 
         <section class="canvas-center" id="canvas-wrapper">
+            <!-- Top Tap-to-Reveal Floating Pill Button -->
+            <div class="detect-reveal-pill" id="detect-reveal-pill" title="Tap to reveal / hide Palette Match & Recolor panel">
+                <div class="pill-glow-dot"></div>
+                <span class="pill-icon">🎨</span>
+                <span class="pill-title">Palette Match &amp; Recolor</span>
+                <span class="pill-badge" id="detect-pill-badge">Scan</span>
+                <span class="pill-chevron" id="detect-pill-chevron">▾</span>
+            </div>
+
             <div class="canvas-container" id="canvas-anim-target">
                 <canvas id="main-canvas"></canvas>
             </div>
@@ -1944,6 +2634,85 @@
                     <button type="button" class="btn success" id="btn-inspect-download">📥 Download PNG</button>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <!-- Floating Movable & Resizable Palette Match & Recolor Panel -->
+    <div class="detect-remapping-panel" id="detect-remapping-panel" style="display: none;">
+        <!-- Draggable Header -->
+        <div class="detect-panel-header" id="detect-panel-drag-handle">
+            <div class="panel-header-left">
+                <span class="drag-grip-icon" title="Drag to move panel anywhere">⋮⋮</span>
+                <span class="panel-header-title">🎨 Palette Match &amp; Recolor</span>
+                <span class="panel-status-pill" id="detect-panel-status-pill">Ready</span>
+            </div>
+            <div class="panel-header-actions">
+                <button type="button" class="btn-panel-action" id="btn-detect-panel-recenter" title="Reset panel position &amp; size">⤢</button>
+                <button type="button" class="btn-panel-action" id="btn-detect-panel-minimize" title="Minimize to top pill">_</button>
+                <button type="button" class="btn-panel-action close-action" id="btn-detect-panel-close" title="Close &amp; Clear Highlight">✕</button>
+            </div>
+        </div>
+
+        <!-- Scrollable Panel Body -->
+        <div class="detect-panel-body">
+            <!-- Hero 1-Click Action Card -->
+            <div class="remapping-hero-card" id="remapping-hero-card">
+                <div class="hero-stats-row">
+                    <div class="hero-stat-badge">
+                        <span class="stat-number" id="detect-stat-nonmatching-colors">0</span>
+                        <span class="stat-label">Colors to Match</span>
+                    </div>
+                    <div class="hero-stat-badge">
+                        <span class="stat-number" id="detect-stat-nonmatching-pixels">0</span>
+                        <span class="stat-label">Pixels Affected</span>
+                    </div>
+                    <div class="hero-stat-badge">
+                        <span class="stat-number" id="detect-stat-custom-palette-count">0</span>
+                        <span class="stat-label">Custom Targets</span>
+                    </div>
+                </div>
+
+                <!-- 1-Click Recolor Primary CTA Button -->
+                <button type="button" class="btn-1click-recolor" id="btn-detect-replace-all" title="Replace all detected non-custom colors with their nearest custom match in 1-click">
+                    <span class="btn-1click-icon">⚡</span>
+                    <span class="btn-1click-text">
+                        <strong>Replace All with Custom Colors</strong>
+                        <small id="btn-detect-replace-subtitle">1-Click Snap to Nearest Custom Match</small>
+                    </span>
+                </button>
+
+                <!-- Quick Secondary Action Buttons -->
+                <div class="hero-actions-row">
+                    <button type="button" class="btn sm" id="btn-detect-add-all-custom" title="Add all detected colors directly into Custom Palette">
+                        ⭐ Add to Custom
+                    </button>
+                    <button type="button" class="btn sm" id="btn-detect-toggle-highlight" title="Toggle canvas neon highlight on/off">
+                        👁️ Highlight Canvas
+                    </button>
+                    <button type="button" class="btn sm" id="btn-detect-refresh" title="Re-analyze image against current custom palette">
+                        🔄 Re-Analyze
+                    </button>
+                </div>
+            </div>
+
+            <!-- Breakdown List Section -->
+            <div class="remapping-breakdown-section">
+                <div class="breakdown-header">
+                    <span class="breakdown-title">Nearest Match Breakdown</span>
+                    <span class="breakdown-count" id="detect-mapping-count-summary">0 Mappings</span>
+                </div>
+                <div class="remapping-list" id="detect-mapping-list">
+                    <div class="empty-remapping-state">
+                        <span>🔍 Click <strong>Re-Analyze</strong> or tap <strong>Palette Match</strong> to scan colors</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Panel Footer & Resize Grip -->
+        <div class="detect-panel-footer">
+            <span class="footer-tip">💡 Drag header to move • Drag corner to resize</span>
+            <div class="resize-handle-indicator">⤡</div>
         </div>
     </div>
 
@@ -2342,6 +3111,34 @@
                 this.jobId = 0;
                 this.toastTimeout = null;
                 this.isAddingCustomColor = false;
+                this.isAddingCustomPaletteColor = false;
+                this.pickerTarget = 'main';
+
+                // Persistent Custom Palette Initialization
+                const savedCustom = localStorage.getItem('pixelgloop_custom_palette');
+                let initialCustom = null;
+                if (savedCustom) {
+                    try {
+                        const parsed = JSON.parse(savedCustom);
+                        if (Array.isArray(parsed) && parsed.length > 0) initialCustom = parsed;
+                    } catch (e) {
+                        initialCustom = null;
+                    }
+                }
+                if (!initialCustom) {
+                    initialCustom = [
+                        { r: 255, g: 71, b: 87 },   // Vivid red
+                        { r: 255, g: 165, b: 2 },   // Amber orange
+                        { r: 46, g: 213, b: 115 },  // Bright mint
+                        { r: 30, g: 144, b: 255 },  // Royal blue
+                        { r: 155, g: 89, b: 182 },  // Lavender purple
+                        { r: 255, g: 255, b: 255 }, // Crisp white
+                        { r: 47, g: 53, b: 66 }     // Deep slate
+                    ];
+                }
+                this.customPalette = initialCustom;
+                this.activePaletteType = 'main';
+                this.customColorIdx = -1;
 
                 this.initEvents();
                 this.initBatchEvents();
@@ -2361,7 +3158,7 @@
                         this.triggerAnim(targetBtn, 'anim-pop');
                     }
                 }
-                this.canvas.style.cursor = (toolName === 'pan') ? 'grab' : 'crosshair';
+                this.canvas.style.cursor = (toolName === 'pan') ? 'grab' : ((toolName === 'same-color') ? 'pointer' : 'crosshair');
 
                 const bucketGroup = document.getElementById('bucket-mode-group');
                 const eraserGroup = document.getElementById('eraser-mode-group');
@@ -2374,6 +3171,7 @@
                 this.canvas.height = this.state.gridHeight * this.state.pixelSize;
                 this.state.pixels = new Array(this.state.gridWidth * this.state.gridHeight).fill(-1);
                 this.buildPaletteUI();
+                this.buildCustomPaletteUI();
 
                 this.selectTool('pencil');
                 this.centerCanvas();
@@ -2616,8 +3414,15 @@
                 });
             }
 
-            openColorPicker(anchorEl) {
-                this.isAddingCustomColor = true;
+            openColorPicker(anchorEl, target = 'main') {
+                this.pickerTarget = target;
+                if (target === 'custom') {
+                    this.isAddingCustomColor = false;
+                    this.isAddingCustomPaletteColor = true;
+                } else {
+                    this.isAddingCustomColor = true;
+                    this.isAddingCustomPaletteColor = false;
+                }
                 this.pickerState.anchorEl = anchorEl;
                 const popover = document.getElementById('color-picker-popover');
                 if (!popover) return;
@@ -2634,8 +3439,16 @@
                 }
 
                 let currentRgb = { r: 132, g: 94, b: 247 };
-                if (this.state.currentColorIdx >= 0 && this.state.currentColorIdx < this.state.palette.length) {
-                    currentRgb = this.state.palette[this.state.currentColorIdx];
+                if (target === 'custom') {
+                    if (this.customColorIdx >= 0 && this.customColorIdx < this.customPalette.length) {
+                        currentRgb = this.customPalette[this.customColorIdx];
+                    } else if (this.state.currentColorIdx >= 0 && this.state.currentColorIdx < this.state.palette.length) {
+                        currentRgb = this.state.palette[this.state.currentColorIdx];
+                    }
+                } else {
+                    if (this.state.currentColorIdx >= 0 && this.state.currentColorIdx < this.state.palette.length) {
+                        currentRgb = this.state.palette[this.state.currentColorIdx];
+                    }
                 }
 
                 const hsv = this.rgbToHsv(currentRgb.r, currentRgb.g, currentRgb.b);
@@ -2654,6 +3467,8 @@
                     popover.style.display = 'none';
                 }
                 this.isAddingCustomColor = false;
+                this.isAddingCustomPaletteColor = false;
+                this.pickerTarget = 'main';
             }
 
             setPickerColorFromHex(hexStr) {
@@ -2706,21 +3521,51 @@
             }
 
             applyLivePickerColor(rgb) {
-                if (this.isAddingCustomColor) {
-                    this.state.palette.push(rgb);
-                    this.state.currentColorIdx = this.state.palette.length - 1;
-                    this.isAddingCustomColor = false;
-                    this.buildPaletteUI();
+                if (this.pickerTarget === 'custom') {
+                    if (this.isAddingCustomPaletteColor) {
+                        this.customPalette.push(rgb);
+                        this.customColorIdx = this.customPalette.length - 1;
+                        this.isAddingCustomPaletteColor = false;
+                        this.saveCustomPalette();
+                        this.buildCustomPaletteUI();
+                        this.selectCustomColor(this.customColorIdx);
+                        if (this.remappingPanelOpen) this.detectNonCustomColors();
+                    } else {
+                        if (this.customColorIdx >= 0 && this.customColorIdx < this.customPalette.length) {
+                            this.customPalette[this.customColorIdx] = rgb;
+                            this.saveCustomPalette();
+                            const swatches = document.querySelectorAll('#custom-palette-container .color-swatch');
+                            if (swatches[this.customColorIdx]) {
+                                swatches[this.customColorIdx].style.backgroundColor = `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`;
+                                swatches[this.customColorIdx].title = `Custom: ${this.rgbToHex(rgb.r, rgb.g, rgb.b)} (Click to paint)`;
+                            }
+                            if (this.state.currentColorIdx >= 0 && this.state.currentColorIdx < this.state.palette.length) {
+                                this.state.palette[this.state.currentColorIdx] = rgb;
+                                const mainSwatches = document.querySelectorAll('#palette-container .color-swatch');
+                                if (mainSwatches[this.state.currentColorIdx]) {
+                                    mainSwatches[this.state.currentColorIdx].style.backgroundColor = `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`;
+                                }
+                            }
+                            if (this.remappingPanelOpen) this.detectNonCustomColors();
+                        }
+                    }
                 } else {
-                    if (this.state.currentColorIdx >= 0 && this.state.currentColorIdx < this.state.palette.length) {
-                        this.state.palette[this.state.currentColorIdx] = rgb;
-                        const swatches = document.querySelectorAll('.color-swatch');
-                        if (swatches[this.state.currentColorIdx]) {
-                            swatches[this.state.currentColorIdx].style.backgroundColor = `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`;
-                            if (this.state.showPattern) {
-                                const luminance = 0.299 * rgb.r + 0.587 * rgb.g + 0.114 * rgb.b;
-                                const textColor = luminance > 128 ? '#000000' : '#ffffff';
-                                swatches[this.state.currentColorIdx].innerHTML = `<span style="color: ${textColor}; font-weight: 800; font-size: 12px; pointer-events: none;">${this.state.currentColorIdx + 1}</span>`;
+                    if (this.isAddingCustomColor) {
+                        this.state.palette.push(rgb);
+                        this.state.currentColorIdx = this.state.palette.length - 1;
+                        this.isAddingCustomColor = false;
+                        this.buildPaletteUI();
+                    } else {
+                        if (this.state.currentColorIdx >= 0 && this.state.currentColorIdx < this.state.palette.length) {
+                            this.state.palette[this.state.currentColorIdx] = rgb;
+                            const swatches = document.querySelectorAll('#palette-container .color-swatch');
+                            if (swatches[this.state.currentColorIdx]) {
+                                swatches[this.state.currentColorIdx].style.backgroundColor = `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`;
+                                if (this.state.showPattern) {
+                                    const luminance = 0.299 * rgb.r + 0.587 * rgb.g + 0.114 * rgb.b;
+                                    const textColor = luminance > 128 ? '#000000' : '#ffffff';
+                                    swatches[this.state.currentColorIdx].innerHTML = `<span style="color: ${textColor}; font-weight: 800; font-size: 12px; pointer-events: none;">${this.state.currentColorIdx + 1}</span>`;
+                                }
                             }
                         }
                     }
@@ -2800,6 +3645,9 @@
                             e.preventDefault();
                             this.redo();
                         }
+                    }
+                    if (e.key === 'Escape') {
+                        this.clearHighlight();
                     }
                 });
 
@@ -3030,6 +3878,126 @@
                     document.getElementById('color-erase-modal').classList.remove('active');
                 });
 
+                // Custom Palette & Tabs Event Listeners
+                const btnAddCustom = document.getElementById('btn-add-custom-color');
+                if (btnAddCustom) {
+                    btnAddCustom.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        this.openColorPicker(btnAddCustom, 'custom');
+                    });
+                }
+
+                const btnSaveCurrent = document.getElementById('btn-save-current-to-custom');
+                if (btnSaveCurrent) {
+                    btnSaveCurrent.addEventListener('click', () => {
+                        this.saveCurrentColorToCustom();
+                    });
+                }
+
+                const btnToggleExpand = document.getElementById('btn-toggle-palette-expand');
+                const paletteScroll = document.getElementById('palette-scroll-wrapper');
+                if (btnToggleExpand && paletteScroll) {
+                    btnToggleExpand.addEventListener('click', () => {
+                        const isExpanded = paletteScroll.classList.toggle('expanded');
+                        btnToggleExpand.textContent = isExpanded ? '⤡' : '⤢';
+                        btnToggleExpand.title = isExpanded ? 'Compact palette view' : 'Expand palette view';
+                        this.audio.sfxToolSelect();
+                    });
+                }
+
+                const tabAll = document.getElementById('tab-palette-all');
+                const tabImage = document.getElementById('tab-palette-image');
+                const tabCustom = document.getElementById('tab-palette-custom');
+                const blockImage = document.getElementById('block-image-palette');
+                const blockCustomPanel = document.getElementById('panel-custom-palette');
+
+                const setPaletteTab = (tabMode) => {
+                    if (tabAll) tabAll.classList.toggle('active', tabMode === 'all');
+                    if (tabImage) tabImage.classList.toggle('active', tabMode === 'image');
+                    if (tabCustom) tabCustom.classList.toggle('active', tabMode === 'custom');
+
+                    if (blockImage) {
+                        blockImage.style.display = (tabMode === 'all' || tabMode === 'image') ? 'block' : 'none';
+                    }
+                    if (blockCustomPanel) {
+                        blockCustomPanel.style.display = (tabMode === 'all' || tabMode === 'custom') ? 'block' : 'none';
+                    }
+                    this.audio.sfxToolSelect();
+                };
+
+                if (tabAll) tabAll.addEventListener('click', () => setPaletteTab('all'));
+                if (tabImage) tabImage.addEventListener('click', () => setPaletteTab('image'));
+                if (tabCustom) tabCustom.addEventListener('click', () => setPaletteTab('custom'));
+
+                // Top Tap-to-Reveal Pill & Floating Remapping Panel Listeners
+                const pillReveal = document.getElementById('detect-reveal-pill');
+                if (pillReveal) {
+                    pillReveal.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        this.toggleRemappingPanel();
+                    });
+                }
+
+                const btnDetectNonCustom = document.getElementById('btn-detect-non-custom');
+                if (btnDetectNonCustom) {
+                    btnDetectNonCustom.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        this.toggleRemappingPanel(true);
+                    });
+                }
+
+                const btnDetectReplaceAll = document.getElementById('btn-detect-replace-all');
+                if (btnDetectReplaceAll) {
+                    btnDetectReplaceAll.addEventListener('click', () => {
+                        this.replaceAllWithCustomPalette();
+                    });
+                }
+
+                const btnDetectAddAll = document.getElementById('btn-detect-add-all-custom');
+                if (btnDetectAddAll) {
+                    btnDetectAddAll.addEventListener('click', () => {
+                        this.addAllDetectedToCustom();
+                    });
+                }
+
+                const btnDetectToggleHighlight = document.getElementById('btn-detect-toggle-highlight');
+                if (btnDetectToggleHighlight) {
+                    btnDetectToggleHighlight.addEventListener('click', () => {
+                        this.toggleCanvasHighlight();
+                    });
+                }
+
+                const btnDetectRefresh = document.getElementById('btn-detect-refresh');
+                if (btnDetectRefresh) {
+                    btnDetectRefresh.addEventListener('click', () => {
+                        this.detectNonCustomColors();
+                    });
+                }
+
+                const btnRecenter = document.getElementById('btn-detect-panel-recenter');
+                if (btnRecenter) {
+                    btnRecenter.addEventListener('click', () => {
+                        this.recenterRemappingPanel();
+                    });
+                }
+
+                const btnMinimize = document.getElementById('btn-detect-panel-minimize');
+                if (btnMinimize) {
+                    btnMinimize.addEventListener('click', () => {
+                        this.toggleRemappingPanel(false);
+                    });
+                }
+
+                const btnClosePanel = document.getElementById('btn-detect-panel-close');
+                if (btnClosePanel) {
+                    btnClosePanel.addEventListener('click', () => {
+                        this.toggleRemappingPanel(false);
+                        this.clearHighlight();
+                    });
+                }
+
+                this.initRemappingPanelDrag();
+
                 if (pixelWorker) {
                     pixelWorker.onmessage = (e) => this.handleWorkerResult(e.data);
                     pixelWorker.onerror = (e) => {
@@ -3055,7 +4023,13 @@
 
             startAction(e) {
                 if (this.state.isFillingAnimation) return;
-                if (e.target && e.target.closest && e.target.closest('.controls-overlay')) return;
+                if (e.target && e.target.closest && (
+                    e.target.closest('.controls-overlay') ||
+                    e.target.closest('.detect-highlight-banner') ||
+                    e.target.closest('#detect-reveal-pill') ||
+                    e.target.closest('#detect-remapping-panel') ||
+                    e.target.closest('.color-picker-popover')
+                )) return;
 
                 const isCanvas = (e.target === this.canvas);
                 const isLeftClick = (e.button === 0 || e.button === undefined);
@@ -3092,6 +4066,9 @@
                 if (this.state.activeTool === 'picker') {
                     this.audio.sfxPicker();
                     this.handleToolAction(e);
+                } else if (this.state.activeTool === 'same-color') {
+                    this.audio.sfxToolSelect();
+                    this.handleToolAction(e);
                 } else if (this.state.activeTool === 'color-eraser') {
                     this.audio.sfxErase();
                     this.handleToolAction(e);
@@ -3100,6 +4077,9 @@
                 } else if (this.state.activeTool === 'eraser' && (this.state.eraserMode === 'area' || e.shiftKey)) {
                     this.handleToolAction(e);
                 } else {
+                    if (this.highlightedPixelIndices && this.state.activeTool !== 'same-color') {
+                        this.clearHighlight();
+                    }
                     if (this.state.activeTool === 'eraser') this.audio.sfxErase();
                     this.state.isDrawing = true;
                     this.handleToolAction(e);
@@ -3218,6 +4198,7 @@
                 this.state.palette = data.palette;
                 this.state.pixels = data.indexedPixels;
                 this.buildPaletteUI();
+                this.buildCustomPaletteUI();
                 this.centerCanvas();
                 this.saveHistory(true);
                 this.render();
@@ -3272,7 +4253,7 @@
 
                     const div = document.createElement('div');
                     div.className = 'color-swatch';
-                    if (i === this.state.currentColorIdx) div.classList.add('active');
+                    if (this.activePaletteType === 'main' && i === this.state.currentColorIdx) div.classList.add('active');
                     div.style.backgroundColor = `rgb(${c.r}, ${c.g}, ${c.b})`;
 
                     if (this.state.showPattern) {
@@ -3282,10 +4263,19 @@
                     }
 
                     div.onclick = () => {
+                        if (this.state.activeTool === 'same-color') {
+                            this.highlightSamePaletteColor(i);
+                            return;
+                        }
+                        this.activePaletteType = 'main';
+                        this.customColorIdx = -1;
+                        document.querySelectorAll('#custom-palette-container .color-swatch').forEach(el => el.classList.remove('active'));
                         this.isAddingCustomColor = false;
+                        this.isAddingCustomPaletteColor = false;
+                        this.pickerTarget = 'main';
                         this.audio.sfxAction();
                         this.triggerAnim(div, 'anim-pop');
-                        document.querySelectorAll('.color-swatch').forEach(el => el.classList.remove('active'));
+                        document.querySelectorAll('#palette-container .color-swatch').forEach(el => el.classList.remove('active'));
                         div.classList.add('active');
                         this.state.currentColorIdx = i;
                         const popover = document.getElementById('color-picker-popover');
@@ -3322,11 +4312,813 @@
                 addBtn.title = "Add Custom Color";
                 addBtn.onclick = (e) => {
                     e.stopPropagation();
-                    this.openColorPicker(addBtn);
+                    this.openColorPicker(addBtn, 'main');
                 };
                 container.appendChild(addBtn);
 
                 document.getElementById('stat-colors').textContent = this.state.palette.length;
+                const statCount = document.getElementById('stat-palette-count');
+                if (statCount) statCount.textContent = this.state.palette.length;
+                const badgeCount = document.getElementById('badge-palette-count');
+                if (badgeCount) badgeCount.textContent = this.state.palette.length;
+            }
+
+            buildCustomPaletteUI() {
+                const container = document.getElementById('custom-palette-container');
+                if (!container) return;
+                container.innerHTML = '';
+
+                const statCustom = document.getElementById('stat-custom-palette-count');
+                if (statCustom) statCustom.textContent = this.customPalette.length;
+                const badgeCustom = document.getElementById('badge-custom-count');
+                if (badgeCustom) badgeCustom.textContent = this.customPalette.length;
+
+                if (this.customPalette.length === 0) {
+                    const emptyTip = document.createElement('div');
+                    emptyTip.className = 'empty-custom-tip';
+                    emptyTip.textContent = '🎨 Tap ➕ to add your own custom colors!';
+                    container.appendChild(emptyTip);
+                }
+
+                this.customPalette.forEach((c, i) => {
+                    const wrap = document.createElement('div');
+                    wrap.className = 'color-swatch-wrapper';
+
+                    const div = document.createElement('div');
+                    div.className = 'color-swatch';
+                    if (this.activePaletteType === 'custom' && i === this.customColorIdx) {
+                        div.classList.add('active');
+                    }
+                    div.style.backgroundColor = `rgb(${c.r}, ${c.g}, ${c.b})`;
+                    const hexStr = this.rgbToHex(c.r, c.g, c.b);
+                    div.title = `Custom Color: ${hexStr} (Click to paint)`;
+
+                    div.onclick = () => {
+                        if (this.state.activeTool === 'same-color') {
+                            this.highlightSameCustomColor(i);
+                            return;
+                        }
+                        this.selectCustomColor(i);
+                    };
+
+                    const eraseBtn = document.createElement('div');
+                    eraseBtn.className = 'swatch-erase-btn';
+                    eraseBtn.innerHTML = '✕';
+                    eraseBtn.title = `Remove ${hexStr} from custom palette`;
+                    eraseBtn.onclick = (e) => {
+                        e.stopPropagation();
+                        this.removeCustomColor(i);
+                    };
+
+                    wrap.appendChild(div);
+                    wrap.appendChild(eraseBtn);
+                    container.appendChild(wrap);
+                });
+
+                const addBtn = document.createElement('div');
+                addBtn.className = 'add-color-btn';
+                addBtn.innerHTML = '➕';
+                addBtn.title = "Add New Custom Color";
+                addBtn.onclick = (e) => {
+                    e.stopPropagation();
+                    this.openColorPicker(addBtn, 'custom');
+                };
+                container.appendChild(addBtn);
+            }
+
+            selectCustomColor(i) {
+                if (i < 0 || i >= this.customPalette.length) return;
+                const c = this.customPalette[i];
+                this.activePaletteType = 'custom';
+                this.customColorIdx = i;
+
+                // Sync with main palette so canvas render, bucket fill, and undo/redo can index it
+                let pIdx = this.state.palette.findIndex(p => p.r === c.r && p.g === c.g && p.b === c.b);
+                if (pIdx === -1) {
+                    this.state.palette.push({ r: c.r, g: c.g, b: c.b });
+                    pIdx = this.state.palette.length - 1;
+                    this.buildPaletteUI();
+                }
+                this.state.currentColorIdx = pIdx;
+
+                document.querySelectorAll('.color-swatch').forEach(el => el.classList.remove('active'));
+                const customSwatches = document.querySelectorAll('#custom-palette-container .color-swatch');
+                if (customSwatches[i]) {
+                    customSwatches[i].classList.add('active');
+                    this.triggerAnim(customSwatches[i], 'anim-pop');
+                }
+                const mainSwatches = document.querySelectorAll('#palette-container .color-swatch');
+                if (mainSwatches[pIdx]) mainSwatches[pIdx].classList.add('active');
+
+                const popover = document.getElementById('color-picker-popover');
+                if (popover && popover.style.display !== 'none') {
+                    const hsv = this.rgbToHsv(c.r, c.g, c.b);
+                    this.pickerState.h = hsv.h;
+                    this.pickerState.s = hsv.s;
+                    this.pickerState.v = hsv.v;
+                    this.syncPickerFromHsv(false);
+                }
+
+                this.audio.sfxAction();
+                if (this.state.activeTool !== 'pencil' && this.state.activeTool !== 'bucket' && this.state.activeTool !== 'color-eraser') {
+                    this.selectTool('pencil');
+                }
+                this.showToast(`🎨 Custom Color: ${this.rgbToHex(c.r, c.g, c.b)} selected`);
+            }
+
+            removeCustomColor(index) {
+                if (index < 0 || index >= this.customPalette.length) return;
+                const c = this.customPalette[index];
+                const hex = this.rgbToHex(c.r, c.g, c.b);
+                this.customPalette.splice(index, 1);
+                this.saveCustomPalette();
+                if (this.customColorIdx === index) {
+                    this.customColorIdx = -1;
+                    this.activePaletteType = 'main';
+                } else if (this.customColorIdx > index) {
+                    this.customColorIdx--;
+                }
+                this.buildCustomPaletteUI();
+                this.audio.sfxAction();
+                this.showToast(`🗑️ Removed ${hex} from Custom Palette`);
+                if (this.remappingPanelOpen) this.detectNonCustomColors();
+            }
+
+            saveCurrentColorToCustom() {
+                if (this.state.currentColorIdx < 0 || !this.state.palette[this.state.currentColorIdx]) {
+                    this.showToast('⚠️ No active color selected to save');
+                    return;
+                }
+                const c = this.state.palette[this.state.currentColorIdx];
+                const hexStr = this.rgbToHex(c.r, c.g, c.b);
+                const exists = this.customPalette.some(p => p.r === c.r && p.g === c.g && p.b === c.b);
+                if (exists) {
+                    this.showToast(`ℹ️ ${hexStr} is already in your Custom Palette!`);
+                    return;
+                }
+                this.customPalette.push({ r: c.r, g: c.g, b: c.b });
+                this.saveCustomPalette();
+                this.buildCustomPaletteUI();
+                this.selectCustomColor(this.customPalette.length - 1);
+                this.audio.sfxAction();
+                this.showToast(`⭐ Saved ${hexStr} to Custom Palette!`);
+                if (this.remappingPanelOpen) this.detectNonCustomColors();
+            }
+
+            saveCustomPalette() {
+                try {
+                    localStorage.setItem('pixelgloop_custom_palette', JSON.stringify(this.customPalette));
+                } catch (e) {
+                    console.warn('Failed to save custom palette to localStorage', e);
+                }
+            }
+
+            initRemappingPanelDrag() {
+                const handle = document.getElementById('detect-panel-drag-handle');
+                const panel = document.getElementById('detect-remapping-panel');
+                if (!handle || !panel) return;
+
+                let isDragging = false;
+                let startX = 0, startY = 0;
+                let initialLeft = 0, initialTop = 0;
+
+                const onPointerDown = (e) => {
+                    if (e.target.closest('.btn-panel-action')) return;
+                    isDragging = true;
+                    startX = e.clientX;
+                    startY = e.clientY;
+
+                    const rect = panel.getBoundingClientRect();
+                    initialLeft = rect.left;
+                    initialTop = rect.top;
+
+                    panel.style.left = `${initialLeft}px`;
+                    panel.style.top = `${initialTop}px`;
+                    panel.style.right = 'auto';
+                    panel.style.bottom = 'auto';
+                    panel.style.transform = 'none';
+
+                    handle.style.cursor = 'grabbing';
+                    document.body.style.userSelect = 'none';
+
+                    window.addEventListener('pointermove', onPointerMove);
+                    window.addEventListener('pointerup', onPointerUp);
+                    e.preventDefault();
+                };
+
+                const onPointerMove = (e) => {
+                    if (!isDragging) return;
+                    const dx = e.clientX - startX;
+                    const dy = e.clientY - startY;
+
+                    const maxLeft = Math.max(0, window.innerWidth - panel.offsetWidth - 8);
+                    const maxTop = Math.max(0, window.innerHeight - panel.offsetHeight - 8);
+
+                    const nextLeft = Math.max(8, Math.min(maxLeft, initialLeft + dx));
+                    const nextTop = Math.max(8, Math.min(maxTop, initialTop + dy));
+
+                    panel.style.left = `${nextLeft}px`;
+                    panel.style.top = `${nextTop}px`;
+                };
+
+                const onPointerUp = () => {
+                    if (!isDragging) return;
+                    isDragging = false;
+                    handle.style.cursor = 'grab';
+                    document.body.style.userSelect = '';
+                    window.removeEventListener('pointermove', onPointerMove);
+                    window.removeEventListener('pointerup', onPointerUp);
+                };
+
+                handle.addEventListener('pointerdown', onPointerDown);
+
+                // Stop propagation of wheel and pointer events so canvas is never moved or zoomed while using panel
+                panel.addEventListener('wheel', (e) => e.stopPropagation());
+                panel.addEventListener('mousedown', (e) => e.stopPropagation());
+                panel.addEventListener('pointerdown', (e) => e.stopPropagation());
+                panel.addEventListener('touchstart', (e) => e.stopPropagation(), { passive: true });
+            }
+
+            recenterRemappingPanel() {
+                const panel = document.getElementById('detect-remapping-panel');
+                if (!panel) return;
+                panel.style.width = '430px';
+                panel.style.height = '500px';
+                panel.style.top = '72px';
+                panel.style.left = `${Math.max(10, Math.floor((window.innerWidth - 430) / 2))}px`;
+                panel.style.right = 'auto';
+                panel.style.bottom = 'auto';
+                panel.style.transform = 'none';
+                this.audio.sfxToolSelect();
+            }
+
+            toggleRemappingPanel(forceState) {
+                const panel = document.getElementById('detect-remapping-panel');
+                const pill = document.getElementById('detect-reveal-pill');
+                if (!panel) return;
+
+                const isCurrentlyOpen = (panel.style.display !== 'none' && panel.style.display !== '');
+                const shouldOpen = (forceState !== undefined) ? forceState : !isCurrentlyOpen;
+
+                if (shouldOpen) {
+                    panel.style.display = 'flex';
+                    if (pill) pill.classList.add('active');
+                    this.remappingPanelOpen = true;
+                    const analysis = this.analyzeCustomPaletteMappings();
+                    this.updateRemappingPanelUI(analysis);
+                } else {
+                    panel.style.display = 'none';
+                    if (pill) pill.classList.remove('active');
+                    this.remappingPanelOpen = false;
+                }
+            }
+
+            toggleCanvasHighlight() {
+                if (this.highlightedPixelIndices && this.highlightedPixelIndices.size > 0) {
+                    this._savedHighlightIndices = this.highlightedPixelIndices;
+                    this.highlightedPixelIndices = null;
+                    this.render();
+                    this.showToast('👁️ Canvas highlight OFF');
+                } else if (this._savedHighlightIndices && this._savedHighlightIndices.size > 0) {
+                    this.highlightedPixelIndices = this._savedHighlightIndices;
+                    this.render();
+                    this.showToast('👁️ Canvas highlight ON');
+                } else {
+                    this.detectNonCustomColors();
+                }
+            }
+
+            analyzeCustomPaletteMappings() {
+                if (!this.customPalette || this.customPalette.length === 0) {
+                    return {
+                        emptyCustom: true,
+                        mappings: [],
+                        nonMatchingPixels: new Set(),
+                        totalNonMatchingPixels: 0,
+                        customPaletteCount: 0
+                    };
+                }
+
+                // Precalculate CIELAB for all custom colors
+                const customWithLab = this.customPalette.map((cp, idx) => ({
+                    r: cp.r,
+                    g: cp.g,
+                    b: cp.b,
+                    customIdx: idx,
+                    hex: this.rgbToHex(cp.r, cp.g, cp.b),
+                    lab: rgbToLab(cp.r, cp.g, cp.b)
+                }));
+
+                const totalPixels = this.state.pixels.length;
+                let nonTransparentPixelCount = 0;
+                const colorStats = new Map();
+
+                for (let i = 0; i < totalPixels; i++) {
+                    const pIdx = this.state.pixels[i];
+                    if (pIdx === -1) continue;
+                    const c = this.state.palette[pIdx];
+                    if (!c) continue;
+
+                    nonTransparentPixelCount++;
+                    const key = `${c.r},${c.g},${c.b}`;
+                    if (!colorStats.has(key)) {
+                        colorStats.set(key, {
+                            r: c.r,
+                            g: c.g,
+                            b: c.b,
+                            hex: this.rgbToHex(c.r, c.g, c.b),
+                            count: 0,
+                            paletteIndices: new Set(),
+                            pixelIndices: []
+                        });
+                    }
+                    const stat = colorStats.get(key);
+                    stat.count++;
+                    stat.paletteIndices.add(pIdx);
+                    stat.pixelIndices.push(i);
+                }
+
+                const nonMatchingMappings = [];
+                const allNonMatchingPixelIndices = new Set();
+                let totalNonMatchingPixels = 0;
+
+                for (let stat of colorStats.values()) {
+                    const inCustom = customWithLab.some(cp => cp.r === stat.r && cp.g === stat.g && cp.b === stat.b);
+                    if (inCustom) {
+                        continue;
+                    }
+
+                    const statLab = rgbToLab(stat.r, stat.g, stat.b);
+                    let bestMatch = null;
+                    let minDist = Infinity;
+
+                    for (let cp of customWithLab) {
+                        const dist = colorDist(statLab, cp.lab);
+                        if (dist < minDist) {
+                            minDist = dist;
+                            bestMatch = cp;
+                        }
+                    }
+
+                    const similarityPct = Math.max(10, Math.min(100, Math.round(100 - (minDist * 0.75))));
+                    const pctOfArtwork = nonTransparentPixelCount > 0 ? ((stat.count / nonTransparentPixelCount) * 100).toFixed(1) : '0';
+
+                    nonMatchingMappings.push({
+                        orig: {
+                            r: stat.r,
+                            g: stat.g,
+                            b: stat.b,
+                            hex: stat.hex,
+                            count: stat.count,
+                            pct: pctOfArtwork,
+                            paletteIndices: stat.paletteIndices,
+                            pixelIndices: stat.pixelIndices
+                        },
+                        target: bestMatch,
+                        dist: minDist,
+                        similarityPct: similarityPct
+                    });
+
+                    for (let idx of stat.pixelIndices) {
+                        allNonMatchingPixelIndices.add(idx);
+                    }
+                    totalNonMatchingPixels += stat.count;
+                }
+
+                // Sort by most frequent colors first
+                nonMatchingMappings.sort((a, b) => b.orig.count - a.orig.count);
+
+                return {
+                    emptyCustom: false,
+                    mappings: nonMatchingMappings,
+                    nonMatchingPixels: allNonMatchingPixelIndices,
+                    totalNonMatchingPixels: totalNonMatchingPixels,
+                    nonTransparentPixelCount: nonTransparentPixelCount,
+                    customPaletteCount: this.customPalette.length
+                };
+            }
+
+            detectNonCustomColors() {
+                const analysis = this.analyzeCustomPaletteMappings();
+                if (analysis.emptyCustom) {
+                    this.updateRemappingPanelUI(analysis);
+                    this.toggleRemappingPanel(true);
+                    this.showToast('⚠️ Your Custom Palette is empty! Add some custom colors first.');
+                    return;
+                }
+
+                this._currentAllNonMatchingIndices = analysis.nonMatchingPixels;
+
+                if (analysis.mappings.length === 0) {
+                    this.clearHighlight();
+                    this.updateRemappingPanelUI(analysis);
+                    this.showToast('🎉 All artwork colors match your Custom Palette!');
+                    return;
+                }
+
+                this.highlightedPixelIndices = analysis.nonMatchingPixels;
+                this.detectedNonCustomColors = analysis.mappings.map(m => ({
+                    r: m.orig.r,
+                    g: m.orig.g,
+                    b: m.orig.b,
+                    count: m.orig.count
+                }));
+                this.render();
+
+                this.updateRemappingPanelUI(analysis);
+                this.toggleRemappingPanel(true);
+                this.audio.sfxToolSelect();
+                this.showToast(`🔍 Found ${analysis.mappings.length} colors (${analysis.totalNonMatchingPixels.toLocaleString()} px) to match with Custom Palette`);
+            }
+
+            updateRemappingPanelUI(analysis) {
+                const statColors = document.getElementById('detect-stat-nonmatching-colors');
+                const statPixels = document.getElementById('detect-stat-nonmatching-pixels');
+                const statTargets = document.getElementById('detect-stat-custom-palette-count');
+                const btnReplaceAll = document.getElementById('btn-detect-replace-all');
+                const replaceSubtitle = document.getElementById('btn-detect-replace-subtitle');
+                const mappingList = document.getElementById('detect-mapping-list');
+                const summaryCount = document.getElementById('detect-mapping-count-summary');
+                const statusPill = document.getElementById('detect-panel-status-pill');
+                const pillBadge = document.getElementById('detect-pill-badge');
+
+                if (analysis.emptyCustom) {
+                    if (statColors) statColors.textContent = '0';
+                    if (statPixels) statPixels.textContent = '0';
+                    if (statTargets) statTargets.textContent = '0';
+                    if (statusPill) {
+                        statusPill.textContent = 'Empty Custom';
+                        statusPill.className = 'panel-status-pill';
+                    }
+                    if (pillBadge) {
+                        pillBadge.textContent = 'Custom Empty';
+                        pillBadge.className = 'pill-badge warning';
+                    }
+                    if (btnReplaceAll) btnReplaceAll.disabled = true;
+                    if (replaceSubtitle) replaceSubtitle.textContent = 'Add colors to Custom Palette in left sidebar to start';
+                    if (summaryCount) summaryCount.textContent = '0 Mappings';
+                    if (mappingList) {
+                        mappingList.innerHTML = `
+                            <div class="empty-remapping-state">
+                                <span>⚠️ <strong>Your Custom Palette is empty!</strong></span>
+                                <span style="font-size: 11px;">Add your favorite colors to the Custom Color Palette in the left sidebar first.</span>
+                            </div>`;
+                    }
+                    return;
+                }
+
+                if (statTargets) statTargets.textContent = analysis.customPaletteCount;
+
+                if (!analysis.mappings || analysis.mappings.length === 0) {
+                    if (statColors) statColors.textContent = '0';
+                    if (statPixels) statPixels.textContent = '0';
+                    if (statusPill) {
+                        statusPill.textContent = '100% Matched';
+                        statusPill.className = 'panel-status-pill success';
+                    }
+                    if (pillBadge) {
+                        pillBadge.textContent = '✅ All Custom';
+                        pillBadge.className = 'pill-badge success';
+                    }
+                    if (btnReplaceAll) btnReplaceAll.disabled = true;
+                    if (replaceSubtitle) replaceSubtitle.textContent = 'All artwork colors match your Custom Palette';
+                    if (summaryCount) summaryCount.textContent = '0 Mappings Needed';
+                    if (mappingList) {
+                        mappingList.innerHTML = `
+                            <div class="empty-remapping-state">
+                                <span>🎉 <strong>All image colors match your Custom Palette!</strong></span>
+                                <span style="font-size: 11px;">Every pixel in your artwork conforms to your custom color palette.</span>
+                            </div>`;
+                    }
+                    return;
+                }
+
+                // Has mappings to replace
+                if (statColors) statColors.textContent = analysis.mappings.length;
+                if (statPixels) statPixels.textContent = analysis.totalNonMatchingPixels.toLocaleString();
+                if (statusPill) {
+                    statusPill.textContent = `${analysis.mappings.length} to Match`;
+                    statusPill.className = 'panel-status-pill';
+                }
+                if (pillBadge) {
+                    pillBadge.textContent = `⚡ ${analysis.mappings.length} non-custom`;
+                    pillBadge.className = 'pill-badge';
+                }
+                if (btnReplaceAll) btnReplaceAll.disabled = false;
+                if (replaceSubtitle) {
+                    replaceSubtitle.textContent = `1-Click Snap ${analysis.mappings.length} colors (${analysis.totalNonMatchingPixels.toLocaleString()} px) to nearest custom matches`;
+                }
+                if (summaryCount) summaryCount.textContent = `${analysis.mappings.length} Mappings (${analysis.totalNonMatchingPixels.toLocaleString()} px)`;
+
+                if (mappingList) {
+                    mappingList.innerHTML = '';
+                    analysis.mappings.forEach(m => {
+                        const key = `${m.orig.r},${m.orig.g},${m.orig.b}`;
+                        const row = document.createElement('div');
+                        row.className = 'mapping-row';
+                        row.title = `Click to highlight ${m.orig.hex} on canvas`;
+                        row.innerHTML = `
+                            <div class="mapping-col original-color">
+                                <div class="swatch-preview" style="background-color: rgb(${m.orig.r}, ${m.orig.g}, ${m.orig.b});"></div>
+                                <div class="color-meta">
+                                    <span class="color-hex">${m.orig.hex}</span>
+                                    <span class="pixel-count">${m.orig.count.toLocaleString()} px (${m.orig.pct}%)</span>
+                                </div>
+                            </div>
+
+                            <div class="mapping-arrow">
+                                <span class="arrow-symbol">➔</span>
+                                <span class="similarity-pill">${m.similarityPct}% match</span>
+                            </div>
+
+                            <div class="mapping-col target-color">
+                                <div class="swatch-preview" style="background-color: rgb(${m.target.r}, ${m.target.g}, ${m.target.b});"></div>
+                                <div class="color-meta">
+                                    <span class="color-hex">${m.target.hex}</span>
+                                    <span class="custom-tag">Custom</span>
+                                </div>
+                            </div>
+
+                            <div class="mapping-actions">
+                                <button type="button" class="btn-row-replace" title="Replace only ${m.orig.hex} with ${m.target.hex}">⚡</button>
+                            </div>
+                        `;
+
+                        // Hover on row highlights this specific color on the canvas
+                        row.addEventListener('mouseenter', () => {
+                            this.highlightedPixelIndices = new Set(m.orig.pixelIndices);
+                            this.render();
+                        });
+                        row.addEventListener('mouseleave', () => {
+                            if (this._currentAllNonMatchingIndices) {
+                                this.highlightedPixelIndices = this._currentAllNonMatchingIndices;
+                                this.render();
+                            }
+                        });
+
+                        // Click row to lock highlight & select
+                        row.addEventListener('click', (e) => {
+                            if (e.target.closest('.btn-row-replace')) return;
+                            this.highlightedPixelIndices = new Set(m.orig.pixelIndices);
+                            this.render();
+                            this.showToast(`🔍 ${m.orig.hex} (${m.orig.count.toLocaleString()} px) highlighted`);
+                        });
+
+                        // Single color replace button
+                        const btnRowReplace = row.querySelector('.btn-row-replace');
+                        if (btnRowReplace) {
+                            btnRowReplace.addEventListener('click', (e) => {
+                                e.stopPropagation();
+                                this.replaceSingleColorWithCustom(key);
+                            });
+                        }
+
+                        mappingList.appendChild(row);
+                    });
+                }
+            }
+
+            replaceAllWithCustomPalette() {
+                if (!this.customPalette || this.customPalette.length === 0) {
+                    this.showToast('⚠️ Your Custom Palette is empty! Add some custom colors first.');
+                    return;
+                }
+
+                const analysis = this.analyzeCustomPaletteMappings();
+                if (analysis.emptyCustom) {
+                    this.showToast('⚠️ Your Custom Palette is empty! Add some custom colors first.');
+                    return;
+                }
+
+                if (!analysis.mappings || analysis.mappings.length === 0) {
+                    this.showToast('🎉 All artwork colors already match your Custom Palette!');
+                    return;
+                }
+
+                // Build replacement map from orig RGB key to target custom RGB
+                const colorReplacementMap = new Map();
+                for (let m of analysis.mappings) {
+                    const key = `${m.orig.r},${m.orig.g},${m.orig.b}`;
+                    colorReplacementMap.set(key, { r: m.target.r, g: m.target.g, b: m.target.b });
+                }
+
+                // Reconstruct palette and pixels cleanly so only custom colors in use remain
+                const newUsedColors = [];
+                const colorToNewIdx = new Map();
+
+                const getOrAddColorIdx = (r, g, b) => {
+                    const key = `${r},${g},${b}`;
+                    if (!colorToNewIdx.has(key)) {
+                        newUsedColors.push({ r, g, b });
+                        colorToNewIdx.set(key, newUsedColors.length - 1);
+                    }
+                    return colorToNewIdx.get(key);
+                };
+
+                let replacedPixelCount = 0;
+                for (let i = 0; i < this.state.pixels.length; i++) {
+                    const pIdx = this.state.pixels[i];
+                    if (pIdx === -1) continue;
+                    const curColor = this.state.palette[pIdx];
+                    if (!curColor) continue;
+
+                    const key = `${curColor.r},${curColor.g},${curColor.b}`;
+                    const replacement = colorReplacementMap.get(key);
+                    if (replacement) {
+                        const newIdx = getOrAddColorIdx(replacement.r, replacement.g, replacement.b);
+                        this.state.pixels[i] = newIdx;
+                        replacedPixelCount++;
+                    } else {
+                        const newIdx = getOrAddColorIdx(curColor.r, curColor.g, curColor.b);
+                        this.state.pixels[i] = newIdx;
+                    }
+                }
+
+                // Update active image palette to the clean custom-only list
+                this.state.palette = newUsedColors;
+                this.state.currentColorIdx = Math.max(0, Math.min(this.state.currentColorIdx, this.state.palette.length - 1));
+
+                this.saveHistory();
+                this.buildPaletteUI();
+                this.clearHighlight();
+                this.render();
+                this.audio.sfxAction();
+
+                // Re-run analysis to show fresh 100% matched state
+                this.detectNonCustomColors();
+                this.showToast(`⚡ Replaced ${analysis.mappings.length} colors across ${replacedPixelCount.toLocaleString()} pixels with your Custom Palette!`);
+            }
+
+            replaceSingleColorWithCustom(origKey) {
+                const analysis = this.analyzeCustomPaletteMappings();
+                const mapping = analysis.mappings.find(m => `${m.orig.r},${m.orig.g},${m.orig.b}` === origKey);
+                if (!mapping) return;
+
+                let targetIdx = this.state.palette.findIndex(
+                    c => c.r === mapping.target.r && c.g === mapping.target.g && c.b === mapping.target.b
+                );
+                if (targetIdx === -1) {
+                    this.state.palette.push({ r: mapping.target.r, g: mapping.target.g, b: mapping.target.b });
+                    targetIdx = this.state.palette.length - 1;
+                }
+
+                for (let pIdx of mapping.orig.pixelIndices) {
+                    this.state.pixels[pIdx] = targetIdx;
+                }
+
+                this.saveHistory();
+                this.buildPaletteUI();
+                this.render();
+                this.audio.sfxAction();
+                this.showToast(`⚡ Replaced ${mapping.orig.hex} with ${mapping.target.hex} (${mapping.orig.count.toLocaleString()} px)`);
+                this.detectNonCustomColors();
+            }
+
+            snapNonCustomToClosest() {
+                // Forward legacy call to 1-click replace
+                this.replaceAllWithCustomPalette();
+            }
+
+            addAllDetectedToCustom() {
+                const analysis = this.analyzeCustomPaletteMappings();
+                if (!analysis.mappings || analysis.mappings.length === 0) return;
+
+                let addedCount = 0;
+                for (let m of analysis.mappings) {
+                    const exists = this.customPalette.some(cp => cp.r === m.orig.r && cp.g === m.orig.g && cp.b === m.orig.b);
+                    if (!exists) {
+                        this.customPalette.push({ r: m.orig.r, g: m.orig.g, b: m.orig.b });
+                        addedCount++;
+                    }
+                }
+
+                if (addedCount > 0) {
+                    this.saveCustomPalette();
+                    this.buildCustomPaletteUI();
+                    this.audio.sfxAction();
+                    this.showToast(`⭐ Added ${addedCount} colors to Custom Palette!`);
+                    this.detectNonCustomColors();
+                }
+            }
+
+            clearHighlight() {
+                this.highlightedPixelIndices = null;
+                this.detectedNonCustomColors = null;
+                this._currentAllNonMatchingIndices = null;
+                this._savedHighlightIndices = null;
+                this.render();
+            }
+
+            selectSameColorAt(x, y) {
+                const idx = y * this.state.gridWidth + x;
+                const targetIdx = this.state.pixels[idx];
+                if (targetIdx === -1) {
+                    this.clearHighlight();
+                    this.showToast('ℹ️ Clicked on empty/transparent pixel');
+                    return;
+                }
+
+                const c = this.state.palette[targetIdx];
+                if (!c) return;
+
+                const hex = this.rgbToHex(c.r, c.g, c.b);
+                const inCustom = this.customPalette.some(cp => cp.r === c.r && cp.g === c.g && cp.b === c.b);
+
+                const sameIndices = new Set();
+                for (let k = 0; k < this.state.pixels.length; k++) {
+                    const pIdx = this.state.pixels[k];
+                    if (pIdx !== -1) {
+                        const pc = this.state.palette[pIdx];
+                        if (pc && pc.r === c.r && pc.g === c.g && pc.b === c.b) {
+                            sameIndices.add(k);
+                        }
+                    }
+                }
+
+                this.highlightedPixelIndices = sameIndices;
+                this.render();
+
+                this.state.currentColorIdx = targetIdx;
+                document.querySelectorAll('.color-swatch').forEach(el => el.classList.remove('active'));
+                const swatches = document.querySelectorAll('#palette-container .color-swatch');
+                if (swatches[targetIdx]) swatches[targetIdx].classList.add('active');
+
+                const pillBadge = document.getElementById('detect-pill-badge');
+                if (pillBadge) {
+                    pillBadge.textContent = `${hex} (${sameIndices.size} px)`;
+                }
+
+                this.audio.sfxAction();
+                this.showToast(`🔍 Same Color: ${hex} (${sameIndices.size.toLocaleString()} px) — ${inCustom ? '✅ In Custom Palette' : '⚠️ NOT in Custom Palette'}`);
+            }
+
+            highlightSamePaletteColor(i) {
+                if (i < 0 || i >= this.state.palette.length) return;
+                const c = this.state.palette[i];
+                if (!c) return;
+
+                const hex = this.rgbToHex(c.r, c.g, c.b);
+                const inCustom = this.customPalette.some(cp => cp.r === c.r && cp.g === c.g && cp.b === c.b);
+
+                const sameIndices = new Set();
+                for (let k = 0; k < this.state.pixels.length; k++) {
+                    const pIdx = this.state.pixels[k];
+                    if (pIdx !== -1) {
+                        const pc = this.state.palette[pIdx];
+                        if (pc && pc.r === c.r && pc.g === c.g && pc.b === c.b) {
+                            sameIndices.add(k);
+                        }
+                    }
+                }
+
+                this.highlightedPixelIndices = sameIndices;
+                this.render();
+
+                document.querySelectorAll('.color-swatch').forEach(el => el.classList.remove('active'));
+                const swatches = document.querySelectorAll('#palette-container .color-swatch');
+                if (swatches[i]) swatches[i].classList.add('active');
+
+                const pillBadge = document.getElementById('detect-pill-badge');
+                if (pillBadge) {
+                    pillBadge.textContent = `${hex} (${sameIndices.size} px)`;
+                }
+
+                this.audio.sfxAction();
+                this.showToast(`🔍 Same Color: ${hex} (${sameIndices.size.toLocaleString()} px) — ${inCustom ? '✅ In Custom Palette' : '⚠️ NOT in Custom Palette'}`);
+            }
+
+            highlightSameCustomColor(i) {
+                if (i < 0 || i >= this.customPalette.length) return;
+                const c = this.customPalette[i];
+                if (!c) return;
+
+                const hex = this.rgbToHex(c.r, c.g, c.b);
+
+                const sameIndices = new Set();
+                for (let k = 0; k < this.state.pixels.length; k++) {
+                    const pIdx = this.state.pixels[k];
+                    if (pIdx !== -1) {
+                        const pc = this.state.palette[pIdx];
+                        if (pc && pc.r === c.r && pc.g === c.g && pc.b === c.b) {
+                            sameIndices.add(k);
+                        }
+                    }
+                }
+
+                this.highlightedPixelIndices = sameIndices;
+                this.render();
+
+                document.querySelectorAll('.color-swatch').forEach(el => el.classList.remove('active'));
+                const swatches = document.querySelectorAll('#custom-palette-container .color-swatch');
+                if (swatches[i]) swatches[i].classList.add('active');
+
+                const pillBadge = document.getElementById('detect-pill-badge');
+                if (pillBadge) {
+                    pillBadge.textContent = `${hex} (${sameIndices.size} px)`;
+                }
+
+                this.audio.sfxAction();
+                this.showToast(`🔍 Custom Color: ${hex} (${sameIndices.size.toLocaleString()} px on canvas)`);
             }
 
             getGridCoords(clientX, clientY) {
@@ -3399,6 +5191,8 @@
                             }
                         }
                     }
+                } else if (this.state.activeTool === 'same-color') {
+                    this.selectSameColorAt(x, y);
                 } else if (this.state.activeTool === 'color-eraser') {
                     // Erase all instances of the clicked pixel's color across the canvas!
                     const targetIdx = this.state.pixels[idx];
@@ -4117,6 +5911,28 @@
                     }
                     targetCtx.stroke();
                     targetCtx.globalAlpha = 1.0;
+                }
+
+                // Highlight detected pixels (Illustrator Select Same / Detect Non-Custom Colors)
+                if (targetCtx === this.ctx && this.highlightedPixelIndices && this.highlightedPixelIndices.size > 0 && exportScale === null) {
+                    targetCtx.save();
+                    const lw = Math.max(1.5, Math.floor(ps * 0.12));
+
+                    for (let pIdx of this.highlightedPixelIndices) {
+                        const px = (pIdx % w) * ps;
+                        const py = Math.floor(pIdx / w) * ps;
+
+                        // Outer dark contrast line
+                        targetCtx.strokeStyle = 'rgba(0, 0, 0, 0.75)';
+                        targetCtx.lineWidth = lw + 1.5;
+                        targetCtx.strokeRect(px + 0.5, py + 0.5, ps - 1, ps - 1);
+
+                        // Inner neon cyan highlight line
+                        targetCtx.strokeStyle = '#00f2fe';
+                        targetCtx.lineWidth = lw;
+                        targetCtx.strokeRect(px + 0.5, py + 0.5, ps - 1, ps - 1);
+                    }
+                    targetCtx.restore();
                 }
             }
 
