@@ -536,7 +536,7 @@
             cursor: pointer;
             border: 3px solid transparent;
             transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 0 4px rgba(0, 0, 0, 0.15);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -547,66 +547,25 @@
             -webkit-user-select: none;
         }
 
-        /* Circular Ripple Ring on Tap/Click */
-        .color-swatch::after {
-            content: '';
-            position: absolute;
-            inset: -4px;
-            border-radius: 50% !important;
-            pointer-events: none;
-            opacity: 0;
-            transform: scale(0.85);
-            box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.4);
-            transition: opacity 0.3s ease-out, transform 0.3s ease-out;
-        }
-
-        .color-swatch:active::after {
-            opacity: 1;
-            transform: scale(1.25);
-            box-shadow: 0 0 0 8px rgba(0, 0, 0, 0.18);
-            transition: 0s;
-        }
-
         .color-swatch:hover {
             transform: scale(1.15);
             border-radius: 50% !important;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 0 8px rgba(0, 0, 0, 0.25);
             z-index: 1;
         }
 
         .color-swatch:active {
-            transform: scale(0.92);
+            transform: scale(0.94);
             border-radius: 50% !important;
-            box-shadow: 0 0 0 5px rgba(0, 0, 0, 0.2), 0 2px 8px rgba(0, 0, 0, 0.25);
+            box-shadow: 0 0 6px rgba(0, 0, 0, 0.25);
         }
 
         .color-swatch.active {
             border-color: var(--text-main);
             transform: scale(1.18);
             border-radius: 50% !important;
-            box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.15), 0 4px 12px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.35);
             z-index: 2;
-        }
-
-        /* Circular Tap Pop & Ripple Animation */
-        .anim-swatch-pop {
-            animation: swatch-pop 0.32s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-            border-radius: 50% !important;
-        }
-
-        @keyframes swatch-pop {
-            0% {
-                transform: scale(0.88);
-                box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.45);
-            }
-            45% {
-                transform: scale(1.24);
-                box-shadow: 0 0 0 8px rgba(0, 0, 0, 0.18), 0 6px 14px rgba(0, 0, 0, 0.25);
-            }
-            100% {
-                transform: scale(1.18);
-                box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.15), 0 4px 12px rgba(0, 0, 0, 0.3);
-            }
         }
 
         .swatch-erase-btn {
@@ -734,7 +693,7 @@
             max-height: 195px;
             overflow-y: auto;
             overflow-x: hidden;
-            padding: 6px 8px 10px 6px;
+            padding: 8px 8px 12px 8px;
             margin: -4px -8px 0 -4px;
             border-radius: 10px;
             scrollbar-width: thin;
@@ -4334,7 +4293,6 @@
                         this.isAddingCustomPaletteColor = false;
                         this.pickerTarget = 'main';
                         this.audio.sfxAction();
-                        this.triggerAnim(div, 'anim-swatch-pop');
                         document.querySelectorAll('#palette-container .color-swatch').forEach(el => el.classList.remove('active'));
                         div.classList.add('active');
                         this.state.currentColorIdx = i;
@@ -4465,7 +4423,6 @@
                 const customSwatches = document.querySelectorAll('#custom-palette-container .color-swatch');
                 if (customSwatches[i]) {
                     customSwatches[i].classList.add('active');
-                    this.triggerAnim(customSwatches[i], 'anim-swatch-pop');
                 }
                 const mainSwatches = document.querySelectorAll('#palette-container .color-swatch');
                 if (mainSwatches[pIdx]) mainSwatches[pIdx].classList.add('active');
