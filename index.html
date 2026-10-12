@@ -1509,13 +1509,39 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            overflow: hidden;
+        }
+
+        .canvas-stage {
+            position: relative;
+            display: inline-block;
+            line-height: 0;
             transform-origin: center center;
+            will-change: transform;
         }
 
         canvas {
+            image-rendering: pixelated;
+        }
+
+        #main-canvas {
+            display: block;
             background: repeating-conic-gradient(var(--canvas-bg1) 0% 25%, var(--canvas-bg2) 0% 50%) 50% / 20px 20px;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
             cursor: crosshair;
+            border-radius: 4px;
+            image-rendering: pixelated;
+        }
+
+        #grid-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            background: transparent;
+            box-shadow: none;
             border-radius: 4px;
             image-rendering: pixelated;
         }
@@ -2365,7 +2391,10 @@
             </div>
 
             <div class="canvas-container" id="canvas-anim-target">
-                <canvas id="main-canvas"></canvas>
+                <div class="canvas-stage" id="canvas-stage">
+                    <canvas id="main-canvas"></canvas>
+                    <canvas id="grid-canvas"></canvas>
+                </div>
             </div>
             <div class="controls-overlay">
                 <span id="zoom-level" style="margin-right: 2px; color: var(--text-main);">100%</span>
@@ -3093,6 +3122,9 @@
             constructor() {
                 this.canvas = document.getElementById('main-canvas');
                 this.ctx = this.canvas.getContext('2d', { willReadFrequently: true });
+                this.gridCanvas = document.getElementById('grid-canvas');
+                this.gridCtx = this.gridCanvas ? this.gridCanvas.getContext('2d') : null;
+                this.canvasStage = document.getElementById('canvas-stage');
                 this.audio = new SynthEngine();
 
                 const defaultPalette = [
@@ -3223,9 +3255,19 @@
                 if (eraserGroup) eraserGroup.style.display = (toolName === 'eraser') ? 'block' : 'none';
             }
 
+            syncCanvasDimensions() {
+                const w = this.state.gridWidth * this.state.pixelSize;
+                const h = this.state.gridHeight * this.state.pixelSize;
+                this.canvas.width = w;
+                this.canvas.height = h;
+                if (this.gridCanvas) {
+                    this.gridCanvas.width = w;
+                    this.gridCanvas.height = h;
+                }
+            }
+
             initCanvas() {
-                this.canvas.width = this.state.gridWidth * this.state.pixelSize;
-                this.canvas.height = this.state.gridHeight * this.state.pixelSize;
+                this.syncCanvasDimensions();
                 this.state.pixels = new Array(this.state.gridWidth * this.state.gridHeight).fill(-1);
                 this.buildPaletteUI();
                 this.buildCustomPaletteUI();
@@ -3802,8 +3844,7 @@
                         this.state.pixels = newPixels;
                         this.state.gridWidth = w;
                         this.state.gridHeight = h;
-                        this.canvas.width = w * this.state.pixelSize;
-                        this.canvas.height = h * this.state.pixelSize;
+                        this.syncCanvasDimensions();
 
                         this.centerCanvas();
                         this.saveHistory();
@@ -3822,10 +3863,13 @@
                 document.getElementById('setting-grid-color').addEventListener('input', (e) => {
                     this.state.userChangedGridColor = true;
                     this.state.gridColor = e.target.value;
-                    this.render();
+                    this.drawGrid();
                 });
 
-                document.getElementById('setting-grid').addEventListener('change', (e) => { this.state.showGrid = e.target.checked; this.render(); });
+                document.getElementById('setting-grid').addEventListener('change', (e) => { 
+                    this.state.showGrid = e.target.checked; 
+                    this.drawGrid(); 
+                });
                 document.getElementById('setting-pattern').addEventListener('change', (e) => {
                     this.state.showPattern = e.target.checked;
                     this.buildPaletteUI();
@@ -4097,7 +4141,7 @@
                     e.target.closest('.color-picker-popover')
                 )) return;
 
-                const isCanvas = (e.target === this.canvas);
+                const isCanvas = (e.target === this.canvas || e.target === this.gridCanvas || (this.canvasStage && this.canvasStage.contains(e.target)));
                 const isLeftClick = (e.button === 0 || e.button === undefined);
                 const isMiddleClick = (e.button === 1);
                 const isRightClick = (e.button === 2);
@@ -4172,7 +4216,9 @@
                 if (this.state.isDrawing && !this.state.isFillingAnimation) {
                     this.saveHistory();
                     this.state.isDrawing = false;
-                    this.render(); // Ensure clean grid sync
+                    if (this.state.shape !== 'square' || this.state.showPattern) {
+                        this.render();
+                    }
                 }
             }
 
@@ -4240,8 +4286,7 @@
                             this.state.tracingImg = img;
                             this.setMode('tracer');
                             this.state.pixels = new Array(this.state.gridWidth * this.state.gridHeight).fill(-1);
-                            this.canvas.width = this.state.gridWidth * this.state.pixelSize;
-                            this.canvas.height = this.state.gridHeight * this.state.pixelSize;
+                            this.syncCanvasDimensions();
                             this.centerCanvas();
                             this.saveHistory(true);
                             this.render();
@@ -4277,8 +4322,7 @@
             reprocess() {
                 if (!this.state.originalImg) return;
                 document.getElementById('loading').style.display = 'flex';
-                this.canvas.width = this.state.gridWidth * this.state.pixelSize;
-                this.canvas.height = this.state.gridHeight * this.state.pixelSize;
+                this.syncCanvasDimensions();
 
                 const off = document.createElement('canvas');
                 off.width = this.state.gridWidth;
@@ -4798,7 +4842,7 @@
                     b: m.orig.b,
                     count: m.orig.count
                 }));
-                this.render();
+                this.drawGrid();
 
                 this.updateRemappingPanelUI(analysis);
                 this.toggleRemappingPanel(true);
@@ -4922,12 +4966,12 @@
                         // Hover on row highlights this specific color on the canvas
                         row.addEventListener('mouseenter', () => {
                             this.highlightedPixelIndices = new Set(m.orig.pixelIndices);
-                            this.render();
+                            this.drawGrid();
                         });
                         row.addEventListener('mouseleave', () => {
                             if (this._currentAllNonMatchingIndices) {
                                 this.highlightedPixelIndices = this._currentAllNonMatchingIndices;
-                                this.render();
+                                this.drawGrid();
                             }
                         });
 
@@ -4935,7 +4979,7 @@
                         row.addEventListener('click', (e) => {
                             if (e.target.closest('.btn-row-replace')) return;
                             this.highlightedPixelIndices = new Set(m.orig.pixelIndices);
-                            this.render();
+                            this.drawGrid();
                             this.showToast(`🔍 ${m.orig.hex} (${m.orig.count.toLocaleString()} px) highlighted`);
                         });
 
@@ -5081,7 +5125,7 @@
                 this.detectedNonCustomColors = null;
                 this._currentAllNonMatchingIndices = null;
                 this._savedHighlightIndices = null;
-                this.render();
+                this.drawGrid();
             }
 
             selectSameColorAt(x, y) {
@@ -5111,7 +5155,7 @@
                 }
 
                 this.highlightedPixelIndices = sameIndices;
-                this.render();
+                this.drawGrid();
 
                 this.state.currentColorIdx = targetIdx;
                 document.querySelectorAll('.color-swatch').forEach(el => el.classList.remove('active'));
@@ -5147,7 +5191,7 @@
                 }
 
                 this.highlightedPixelIndices = sameIndices;
-                this.render();
+                this.drawGrid();
 
                 document.querySelectorAll('.color-swatch').forEach(el => el.classList.remove('active'));
                 const swatches = document.querySelectorAll('#palette-container .color-swatch');
@@ -5181,7 +5225,7 @@
                 }
 
                 this.highlightedPixelIndices = sameIndices;
-                this.render();
+                this.drawGrid();
 
                 document.querySelectorAll('.color-swatch').forEach(el => el.classList.remove('active'));
                 const swatches = document.querySelectorAll('#custom-palette-container .color-swatch');
@@ -5954,6 +5998,23 @@
                     }
                 }
 
+                if (targetCtx === this.ctx) {
+                    this.drawGrid(this.gridCtx);
+                } else if (exportScale !== null) {
+                    this.drawGrid(targetCtx, exportScale, includeGrid);
+                }
+            }
+
+            drawGrid(targetCtx = this.gridCtx, exportScale = null, includeGrid = false) {
+                if (!targetCtx) return;
+                const ps = exportScale !== null ? exportScale : this.state.pixelSize;
+                const w = this.state.gridWidth;
+                const h = this.state.gridHeight;
+
+                if (targetCtx === this.gridCtx) {
+                    targetCtx.clearRect(0, 0, targetCtx.canvas.width, targetCtx.canvas.height);
+                }
+
                 let shouldDrawGrid = false;
                 if (exportScale !== null) {
                     shouldDrawGrid = includeGrid;
@@ -5962,6 +6023,7 @@
                 }
 
                 if (shouldDrawGrid) {
+                    targetCtx.save();
                     targetCtx.strokeStyle = this.state.gridColor;
                     targetCtx.globalAlpha = (exportScale !== null) ? 1.0 : 0.4;
                     targetCtx.lineWidth = Math.max(1, Math.floor(ps * 0.05));
@@ -5985,11 +6047,11 @@
                         targetCtx.lineTo(w * ps, ly);
                     }
                     targetCtx.stroke();
-                    targetCtx.globalAlpha = 1.0;
+                    targetCtx.restore();
                 }
 
                 // Highlight detected pixels (Illustrator Select Same / Detect Non-Custom Colors)
-                if (targetCtx === this.ctx && this.highlightedPixelIndices && this.highlightedPixelIndices.size > 0 && exportScale === null) {
+                if (targetCtx === this.gridCtx && this.highlightedPixelIndices && this.highlightedPixelIndices.size > 0 && exportScale === null) {
                     targetCtx.save();
                     const lw = Math.max(1.5, Math.floor(ps * 0.12));
 
@@ -6018,7 +6080,13 @@
             }
 
             updateTransform() {
-                this.canvas.style.transform = `translate(${this.state.panX}px, ${this.state.panY}px) scale(${this.state.zoom})`;
+                const transform = `translate(${this.state.panX}px, ${this.state.panY}px) scale(${this.state.zoom})`;
+                if (this.canvasStage) {
+                    this.canvasStage.style.transform = transform;
+                } else {
+                    this.canvas.style.transform = transform;
+                    if (this.gridCanvas) this.gridCanvas.style.transform = transform;
+                }
             }
 
             saveHistory(reset = false) {
