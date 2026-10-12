@@ -2334,7 +2334,7 @@
                     <h3>
                         <div style="display: flex; align-items: center; gap: 6px;">
                             <span>Custom Color Palette</span>
-                            <span class="palette-count-badge" id="stat-custom-palette-count">7</span>
+                            <span class="palette-count-badge" id="stat-custom-palette-count">15</span>
                         </div>
                         <div style="display: flex; gap: 4px; align-items: center; flex-wrap: wrap; justify-content: flex-end;">
                             <button type="button" class="btn sm" id="btn-detect-non-custom" title="Detect all pixels on canvas NOT in your Custom Palette (Illustrator style)"
@@ -2343,6 +2343,8 @@
                                 style="padding: 3px 8px; font-size: 11px;">➕ Add</button>
                             <button type="button" class="btn sm" id="btn-save-current-to-custom" title="Save current active color to custom palette"
                                 style="padding: 3px 8px; font-size: 11px;">⭐ Save Current</button>
+                            <button type="button" class="btn sm" id="btn-reset-custom-defaults" title="Reset Custom Palette to default 15 colors"
+                                style="padding: 3px 6px; font-size: 11px;">↺ Defaults</button>
                         </div>
                     </h3>
                     <div class="palette-scroll-container" id="custom-palette-scroll-wrapper">
@@ -3142,27 +3144,55 @@
                 this.pickerTarget = 'main';
 
                 // Persistent Custom Palette Initialization
+                // Persistent Custom Palette Initialization (Default 15 Colors)
+                const DEFAULT_CUSTOM_PALETTE = [
+                    { r: 96, g: 221, b: 83 },   // Light Green (#60DD53)
+                    { r: 188, g: 133, b: 53 },  // Light Brown (#BC8535)
+                    { r: 255, g: 99, b: 170 },  // Pink (#FF63AA)
+                    { r: 51, g: 169, b: 233 },  // Deep Blue (#33A9E9)
+                    { r: 187, g: 234, b: 252 }, // Light Blue (#BBEAFC)
+                    { r: 176, g: 85, b: 242 },  // Purple (#B055F2)
+                    { r: 253, g: 224, b: 58 },  // Yellow (#FDE03A)
+                    { r: 4, g: 119, b: 78 },    // Deep Green (#04774E)
+                    { r: 252, g: 202, b: 165 }, // Peach (#FCCAA5)
+                    { r: 119, g: 255, b: 231 }, // Mint / Cyan (#77FFE7)
+                    { r: 255, g: 255, b: 255 }, // White (#FFFFFF)
+                    { r: 138, g: 161, b: 167 }, // Grey (#8AA1A7)
+                    { r: 245, g: 123, b: 0 },   // Orange (#F57B00)
+                    { r: 211, g: 61, b: 72 },   // Red (#D33D48)
+                    { r: 98, g: 60, b: 41 }     // Deep Brown (#623C29)
+                ];
+                this.DEFAULT_CUSTOM_PALETTE = DEFAULT_CUSTOM_PALETTE;
+
                 const savedCustom = localStorage.getItem('pixelgloop_custom_palette');
+                const customPaletteVersion = localStorage.getItem('pixelgloop_custom_palette_v');
                 let initialCustom = null;
+
                 if (savedCustom) {
                     try {
                         const parsed = JSON.parse(savedCustom);
-                        if (Array.isArray(parsed) && parsed.length > 0) initialCustom = parsed;
+                        if (Array.isArray(parsed) && parsed.length > 0) {
+                            // Automatically migrate old 7-color initial set to user's 15 colors
+                            const isOldStarter = (parsed.length === 7 && parsed[0].r === 255 && parsed[0].g === 71 && parsed[0].b === 87);
+                            if (isOldStarter || !customPaletteVersion) {
+                                initialCustom = DEFAULT_CUSTOM_PALETTE.map(c => ({ ...c }));
+                                localStorage.setItem('pixelgloop_custom_palette_v', '2');
+                                localStorage.setItem('pixelgloop_custom_palette', JSON.stringify(initialCustom));
+                            } else {
+                                initialCustom = parsed;
+                            }
+                        }
                     } catch (e) {
                         initialCustom = null;
                     }
                 }
+
                 if (!initialCustom) {
-                    initialCustom = [
-                        { r: 255, g: 71, b: 87 },   // Vivid red
-                        { r: 255, g: 165, b: 2 },   // Amber orange
-                        { r: 46, g: 213, b: 115 },  // Bright mint
-                        { r: 30, g: 144, b: 255 },  // Royal blue
-                        { r: 155, g: 89, b: 182 },  // Lavender purple
-                        { r: 255, g: 255, b: 255 }, // Crisp white
-                        { r: 47, g: 53, b: 66 }     // Deep slate
-                    ];
+                    initialCustom = DEFAULT_CUSTOM_PALETTE.map(c => ({ ...c }));
+                    localStorage.setItem('pixelgloop_custom_palette_v', '2');
+                    localStorage.setItem('pixelgloop_custom_palette', JSON.stringify(initialCustom));
                 }
+
                 this.customPalette = initialCustom;
                 this.activePaletteType = 'main';
                 this.customColorIdx = -1;
@@ -3921,6 +3951,15 @@
                     });
                 }
 
+                const btnResetDefaults = document.getElementById('btn-reset-custom-defaults');
+                if (btnResetDefaults) {
+                    btnResetDefaults.addEventListener('click', () => {
+                        if (confirm('Reset custom palette to the 15 default colors?')) {
+                            this.resetCustomPaletteToDefaults();
+                        }
+                    });
+                }
+
                 const btnToggleExpand = document.getElementById('btn-toggle-palette-expand');
                 const paletteScroll = document.getElementById('palette-scroll-wrapper');
                 if (btnToggleExpand && paletteScroll) {
@@ -4490,8 +4529,19 @@
                 if (this.remappingPanelOpen) this.detectNonCustomColors();
             }
 
+            resetCustomPaletteToDefaults() {
+                this.customPalette = this.DEFAULT_CUSTOM_PALETTE.map(c => ({ ...c }));
+                this.customColorIdx = -1;
+                this.saveCustomPalette();
+                this.buildCustomPaletteUI();
+                this.audio.sfxAction();
+                this.showToast('↺ Custom Palette reset to 15 default colors!');
+                if (this.remappingPanelOpen) this.detectNonCustomColors();
+            }
+
             saveCustomPalette() {
                 try {
+                    localStorage.setItem('pixelgloop_custom_palette_v', '2');
                     localStorage.setItem('pixelgloop_custom_palette', JSON.stringify(this.customPalette));
                 } catch (e) {
                     console.warn('Failed to save custom palette to localStorage', e);
